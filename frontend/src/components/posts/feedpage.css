@@ -1,0 +1,21 @@
+*{
+    position: inherit;
+}
+.itemconfiguration
+{
+		height:100vh;
+        margin-top: 10px;
+        border-radius: 20px;
+		width:90vh;
+		background-color:rgb(255, 255, 255);		
+        overflow-y:auto;
+		float:left;
+		position:relative;
+		margin-left:-5px;
+}
+.feedpagemain{
+    padding-left: 25px;
+}
+.itemconfiguration::-webkit-scrollbar{
+    display: none;
+}

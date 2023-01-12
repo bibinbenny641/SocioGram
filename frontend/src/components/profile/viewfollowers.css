@@ -1,0 +1,14 @@
+.opendiv{
+    position: absolute;
+    margin:5px;
+    padding:5px;
+    background-color: rgb(250, 252, 250);
+    width: 500px;
+    height: 30rem;
+    top: -300px;
+    right: -500px   ;
+    overflow: auto;
+    text-align:justify;
+    border-radius: 10px;
+    box-shadow: rgba(19, 19, 21, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
