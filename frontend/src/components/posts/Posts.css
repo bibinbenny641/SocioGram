@@ -1,104 +1,4 @@
-/* .post {
-    width: 100%;
-    border-radius: 10px;
-    background-color: rgb(223, 228, 223);
-    -webkit-box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
-    box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
-    margin: 30px 0;
-    display: flex;
-    flex-direction: row;
-  }
-  .mainpostdiv{
-    
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .postWrapper {
-    display: flex;
-    flex-direction: row;
-    padding: 10px;
-  }
-  .topalign{
-    display: flex;
-    flex-direction: row;
-  }
-  
-  .postTop {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  
-  .postTopLeft {
-    display: flex;
-    align-items: center;
-  }
-  
-  .postProfileImg {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    object-fit: cover;
-  }
-  
-  .postUsername {
-    font-size: 15px;
-    font-weight: 500;
-    margin: 0 10px;
-  }
-  
-  .postDate{
-      font-size: 12px;
-  }
-  
-  .postCenter{
-      margin: 20px 0;
-  }
-  
-  .postImg{
-      margin-top: 20px;
-      width: 100%;
-      max-height: 500px;
-      object-fit: contain;
-  }
-  
-  .postBottom{
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-  }
-  
-  .postBottomLeft{
-      display: flex;
-      align-items: center;   
-  }
-  
-  .likeIcon{
-      width: 24px;
-      height: 24px;
-      margin-right: 5px;
-      cursor: pointer;
-  }
-  
-  .postLikeCounter{
-      font-size: 15px;
-  }
-  
-  .postCommentText{
-      cursor: pointer;
-      border-bottom: 1px dashed gray;
-      font-size: 15px;
-  }
-  .containernew{
-    color: red;
-    background-color: rgb(225, 230, 230);
-    height: 50vh;
-    width: 90vh;
-    margin-left: 80px;
-    border-radius: 15px;
-    margin-top: 20px;
- } */
+/* 
 
 
 
@@ -108,13 +8,12 @@
 	margin: auto;
 	position: relative;
   border-radius: 10px;
-  /* padding-top: 10px; */
   margin-top: 20px;
 	top: 5vh;
   box-shadow: 3px 3px 5px 6px #ccc;
 }
 body{
-	background-color: rgb(224, 217, 217);
+	background-color: rgb(150, 129, 129);
 }
 .media-object{
 	width: 3.5vw;
@@ -160,7 +59,6 @@ body{
 }
 .time{
 	font-size: 0.8vw;
-  /* padding-right: 10px; */
 }
 .fa{
 	cursor : pointer
@@ -193,9 +91,7 @@ body{
   cursor: pointer;
 }
 @media only screen and (max-width: 425px){
-	.main{
-		width: 100vw;
-	}
+
 	.media-object{
 	    width: 10.5vw;
 	    height: 10.5vw;
@@ -216,7 +112,8 @@ body{
 	    margin-right: 3vw;
     }
 	.panel-body{
-	    padding: 3vw;
+	    padding-right: 50px;
+      padding-left: 0px;
     }
 	.not{
 	    height: 60vw;
@@ -246,4 +143,136 @@ body{
 	    font-size: 6vw;
 	    color: #d32f2f;
     }
+    .main{
+      margin-left: 15px;
+      margin-right: 10px;
+    }
+} */
+
+
+
+
+/* .theme-light .main{
+  height: 90vh;
+  margin-top: 70px;
+  overflow: scroll;
 }
+.main::-webkit-scrollbar {
+  display: none;
+} */
+
+.theme-light .post {
+  box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+  border-radius: 20px;
+  background-color: rgb(255, 255, 255);
+  width: 90vh;
+  color: #000;
+}
+.theme-light .post .container {
+  padding: 20px;
+}
+.theme-light .post .container .user {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.theme-light .post .container .user .userInfo {
+  display: flex;
+  gap: 20px;
+}
+.theme-light .post .container .user .userInfo img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.theme-light .post .container .user .userInfo .details {
+  display: flex;
+  flex-direction: column;
+}
+.theme-light .post .container .user .userInfo .details .name {
+  font-weight: 500;
+}
+.theme-light .post .container .user .userInfo .details .date {
+  font-size: 12px;
+}
+.theme-light .post .container .content {
+  margin: 20px 0px;
+}
+.theme-light .post .container .content img {
+  width: 100%;
+  max-height: 500px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  margin-top: 20px;
+}
+.theme-light .post .container .info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.theme-light .post .container .info .item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 14px;
+}
+.theme-dark .post {
+  box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+  border-radius: 20px;
+  background-color: #222;
+  color: whitesmoke;
+}
+.theme-dark .post .container {
+  padding: 20px;
+}
+.theme-dark .post .container .user {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.theme-dark .post .container .user .userInfo {
+  display: flex;
+  gap: 20px;
+}
+.theme-dark .post .container .user .userInfo img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.theme-dark .post .container .user .userInfo .details {
+  display: flex;
+  flex-direction: column;
+}
+.theme-dark .post .container .user .userInfo .details .name {
+  font-weight: 500;
+}
+.theme-dark .post .container .user .userInfo .details .date {
+  font-size: 12px;
+}
+.theme-dark .post .container .content {
+  margin: 20px 0px;
+}
+.theme-dark .post .container .content img {
+  width: 100%;
+  max-height: 500px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  margin-top: 20px;
+}
+.theme-dark .post .container .info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.theme-dark .post .container .info .item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 14px;
+}/*# sourceMappingURL=post.css.map */

@@ -1,131 +1,140 @@
-import "./topbar.css";
-import PersonIcon from '@mui/icons-material/Person';
-import SearchIcon from '@mui/icons-material/Search';
-import ChatIcon from '@mui/icons-material/Chat';
-import NotificationsIcon from '@mui/icons-material/Notifications';
+
+
+// import "./topbar.css";
+// import * as React from 'react';
+// import { styled, alpha } from '@mui/material/styles';
+// import AppBar from '@mui/material/AppBar';
+// import Box from '@mui/material/Box';
+// import Toolbar from '@mui/material/Toolbar';
+// import IconButton from '@mui/material/IconButton';
+// import Typography from '@mui/material/Typography';
+// import InputBase from '@mui/material/InputBase';
+// import MenuIcon from '@mui/icons-material/Menu';
+// import SearchIcon from '@mui/icons-material/Search';
+// import SideBar from '../SideBar';
+
+// const Search = styled('div')(({ theme }) => ({
+//   position: 'relative',
+//   borderRadius: theme.shape.borderRadius,
+//   backgroundColor: alpha(theme.palette.common.white, 0.15),
+//   '&:hover': {
+//     backgroundColor: alpha(theme.palette.common.white, 0.25),
+//   },
+//   marginLeft: 0,
+//   width: '100%',
+//   [theme.breakpoints.up('sm')]: {
+//     marginLeft: theme.spacing(1),
+//     width: 'auto',
+//   },
+// }));
+
+// const SearchIconWrapper = styled('div')(({ theme }) => ({
+//   padding: theme.spacing(0, 2),
+//   height: '100%',
+//   position: 'absolute',
+//   pointerEvents: 'none',
+//   display: 'flex',
+//   alignItems: 'center',
+//   justifyContent: 'center',
+// }));
+
+// const StyledInputBase = styled(InputBase)(({ theme }) => ({
+//   color: 'inherit',
+//   '& .MuiInputBase-input': {
+//     padding: theme.spacing(1, 1, 1, 0),
+//     // vertical padding + font size from searchIcon
+//     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+//     transition: theme.transitions.create('width'),
+//     width: '100%',
+//     [theme.breakpoints.up('sm')]: {
+//       width: '12ch',
+//       '&:focus': {
+//         width: '20ch',
+//       },
+//     },
+//   },
+// }));
+
+// export default function Topbar() {
+//   return (
+//     <Box sx={{ flexGrow: 1 }}>
+//       <AppBar position="static">
+//         <Toolbar>
+//           <IconButton
+//             size="large"
+//             edge="start"
+//             color="inherit"
+//             aria-label="open drawer"
+//             sx={{ mr: 2 }}
+//           >
+
+//           </IconButton>
+//           <Typography
+//             variant="h6"
+//             noWrap
+//             component="div"
+//             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+//           >
+//             SocioGram
+//           </Typography>
+//           <Search>
+//             <SearchIconWrapper>
+//               <SearchIcon />
+//             </SearchIconWrapper>
+//             <StyledInputBase
+//               placeholder="Search…"
+//               inputProps={{ 'aria-label': 'search' }}
+//             />
+//           </Search>
+//         </Toolbar>
+//       </AppBar>
+//     </Box>
+//   );
+// }
+
+//hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+
+
+
+import "./Topbarnew.css";
+import HomeIcon from '@mui/icons-material/Home';
+import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
+import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
+import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
+import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
+import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { Link } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
 
-import { useEffect, useState } from "react";
-
-export default function Topbar() {
-  const [showResults, setShowResults] = useState(false);
-  const [adddata, setAdddata] = useState('');
-
-  const [usersearch, setUsersearch] = useState([])
-  console.log(usersearch, 'first time')
-
-  const generateError = (err) =>
-    toast.success(err, {
-      position: 'bottom-right',
-    })
-
-    let remove = ()=>{
-      console.log("close");
-    }
-
-
-  let searchUser = async (e) => {
-    e.preventDefault()
-    if(e.target.value==''){
-      console.log("show result if    fff")
-      setShowResults(false)
-    }
-    console.log(e.target.value)
-    setAdddata(e.target.value)
-
-    let response = await fetch('http://127.0.0.1:8000/follow/search', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-
-      },
-      body: JSON.stringify({ 'name': e.target.value })
-    })
-    let data = await response.json()
-    console.log("aaaaaaaaaaaaaaaaaaaaadddddddddddd")
-    console.log(data.results[0])
-    if (response.status === 200) {
-      console.log('kitty kitty');
-      generateError(data.results[0].fullname)
-      setUsersearch(data.results)
-      console.log(usersearch, 'second time')
-      setShowResults(true)
-
-
-
-    } else {
-      generateError(" no such user found")
-    }
-
-  }
-  useEffect(() => {
-    setShowResults(false)
-  },[])
+const Topbar = () => {
 
   return (
-    <div className="topbarContainer"  onClick={remove}>
-      <div className="topbarLeft">
-        <Link style={{ textDecoration: 'none' }} to='/'>
-          <span className="logo">SocioGram</span>
+    <div className="navbar">
+      <div className="left">
+        <Link to="/" style={{ textDecoration: "none" }}>
+          <span>SocioGram</span>
         </Link>
+        <HomeIcon />
+        
+        <GridViewOutlinedIcon />
+        <div className="search">
+          <SearchOutlinedIcon />
+          <input type="text" placeholder="Search..." />
+        </div>
       </div>
-
-      <div className="topbarCenter" >
-        <div className="searchbar">
-          <SearchIcon className="searchIcon" />
-
-          <input onChange={searchUser}
-            name="name"
-            placeholder="Search for friend, post or video"
-            className="searchInput"
-            value={adddata}
+      <div className="right">
+        <PersonOutlinedIcon />
+        <EmailOutlinedIcon />
+        <NotificationsOutlinedIcon />
+        <div className="user">
+          <img style={{height:'30px'}}
+            src="https://cdn-icons-png.flaticon.com/512/21/21104.png"
+            alt=""
           />
-          <div style={{ background: "grey", height: "25px", width: 'auto' }} className="dropdown">
-            {showResults && (
-              <div className="absolute mt-1 w-full p-2 bg-white shadow-lg rounded-bl rounded-br max-h-56 overflow-y-auto">
-                {usersearch.map((item, index) => {
-                  return (
-                    <div
-                      key={index}
-                      // onMouseDown={() => handleSelection(index)}
-                      // ref={index === focusedIndex ? resultContainer : null}
-                      // style={{
-                      //   backgroundColor:
-                      //     index === focusedIndex ? "rgba(0,0,0,0.1)" : "",
-                      // }}
-                      className="cursor-pointer hover:bg-black hover:bg-opacity-10 p-2"
-                    >
-                      {item.user_name}
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-          </div>
-
+          <span>kk</span>
         </div>
-      </div>
-
-      <div className="topbarRight">
-        {/* <div className="topbarLinks">
-          <span className="topbarLink">Homepage</span>
-          <span className="topbarLink">Timeline</span>
-        </div> */}
-        <div className="topbarIcons">
-          {/* <div className="topbarIconItem">
-            
-            <Link  to="/myprofile">
-            <PersonIcon /></Link>
-            <span className="topbarIconBadge">1</span>
-          </div> */}
-
-        </div>
-        <Link to='/profile'>
-          <img src="/assets/person/1.jpeg" alt="" className="topbarImg" />
-        </Link>
-
       </div>
     </div>
   );
-}
+};
+
+export default Topbar;

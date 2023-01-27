@@ -72,5 +72,7 @@ class User(AbstractBaseUser):
 
     def is_active(self):
         return self.active
+
+        
 class demo(models.Model):
     text = models.CharField(max_length=250)

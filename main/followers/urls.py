@@ -8,6 +8,7 @@ urlpatterns = [
     path('getposts/<id>/',views.getPosts,name='getposts'),
     path('userpost/<uid>/',views.userPost,name='userPost'),
     path('search',views.searchUser,name='search'),
+    path('isliked/<id>/',views.isliked,name='isliked'),
 
     
 ]

@@ -1,5 +1,5 @@
 
-import './App.css';
+
 // import { BrowserRouter, Routes, Route} from 'react-router-dom'
 import {
   BrowserRouter,
@@ -21,6 +21,7 @@ import ProfilePage from './pages/ProfilePage';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 import MessagePage from './pages/MessagePage';
+import Topbar from "./components/topbar/Topbar";
 
 
 function App() {
@@ -37,9 +38,6 @@ function App() {
         <Routes>
         
         <Route element={<LoginPage/>} path="/login" exact/>
-        {/* <Route exact path="/" element={<PrivateRoute/>}  > 
-        <Route exact path="/" element={<HomePage />} /> 
-        </Route> */}
         
         <Route element={<RegisterPage/>} path="/register" />
         
@@ -54,7 +52,6 @@ function App() {
        <Route element={<Dashboard/>} path="/dashboard" />
        </Route>
     
-          
         <Route element={<HomePage/>} path="/" /> 
         <Route element={<ProfilePage/>} path="/myprofile" />
         <Route element={<MessagePage/>} path="/message" />

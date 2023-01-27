@@ -10,7 +10,8 @@ urlpatterns = [
     path('api/',include('adminSide.api.urls')),
     path('',include('adminSide.urls')),
     path('follow/',include('followers.urls')),
-    path('adminside/',include('adminSide.api.urls'))
+    path('adminside/',include('adminSide.api.urls')),
+    path('chat/',include('chat.urls'))
 
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

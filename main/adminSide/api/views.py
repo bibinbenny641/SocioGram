@@ -45,34 +45,24 @@ def registerUser(request):
     try:
 
         data = request.data
+        print(data)
         fullname = data['fullname']
         print(fullname)
         email = data['email']
         phoneno = data['phoneno']
         
 
-        password1 = data['password1']
-        password2 = data['password2']
-        if password1!=password2:
-            
-            return Response("Password Did Not Match !!!!")
-        if fullname.isspace():
-            print("hai")
-            return Response("Enter a valid email address !!!")
-        if email.isspace():
-            print("hai")
-            return Response("Enter a valid email address !!!")
         if User.objects.filter(email=email).exists():
             print('email exists')
-            return Response("Email id already taken !!!")
+            message = "email already exists"
+            return Response(message, status=status.HTTP_400_BAD_REQUEST)
 
         if User.objects.filter(phoneno=phoneno).exists():
-            return Response("Phone Number already exists !!!!")
-
-
-
+            print("phoneno exists")
+            message="phone no already taken"
+            return Response(message, status=status.HTTP_400_BAD_REQUEST)
         else:
-
+            print("uccess")
             user = User.objects.create(
             fullname = data['fullname'],
             email = data['email'],
@@ -81,7 +71,8 @@ def registerUser(request):
             )
         serializer = UserSerializer(user, many=False)
         return Response(serializer.data)
-    except:
+    except Exception as e:
+        print(e)
         message = {'detail': 'Some Problem occured'}
         return Response(message, status=status.HTTP_400_BAD_REQUEST)    
     
@@ -117,6 +108,7 @@ def BlockUser(request,id):
 
 @api_view(['GET'])
 def profile(reques,id):
+    print('profile function clicked')
     user = User.objects.get(id=id)
     serializer = UserSerializer(user, many=False)
     return Response({"data":serializer.data})

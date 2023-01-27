@@ -29,9 +29,18 @@ class Posts(models.Model):
     username = models.CharField(max_length=255,null=True)
     date = models.TimeField(auto_now_add=True)
     visibility = models.BooleanField(default=True)
+    # isLiked = models.OneToOneField(User,on_delete=models.CASCADE)
+    likeCount = models.IntegerField(blank=True,null=True)
 
 @receiver(post_save,sender=Posts)
 def addUsername(sender,instance,**kwargs):
-    print("...........................................")
-
     Posts.objects.filter(id=instance.id).update(username = User.objects.filter(id=instance.user.id).values('user_name') ) 
+
+
+
+class Likes(models.Model):
+    isLiked = models.ManyToManyField(User)
+    likedPost = models.ForeignKey(Posts,on_delete=models.CASCADE)
+
+
+

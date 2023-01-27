@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
-from .models import FollowList,Posts
+from .models import FollowList,Posts,Likes
 from .serializers import FollowlistSerializer,PostSerializer
 from adminSide.serializers import UserSerializer,UserdemoSerializer
 from django.http import Http404
@@ -10,15 +10,14 @@ from rest_framework import status
 from adminSide.models import User
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from django.db.models import Q
+from django.contrib.auth import get_user
 
 # Create your views here.
 class followlist_class(APIView):
     
     def post(self, request, format=None):
-        print('follow vvvvvvvvvvvvvvvvvvvvvv ')
-        # print(auth.user)
-        # followedBy = request.data['followedBy']
-        # following = request.data['following']
+        print('inside the post function to follow a user ')
+
         print(request.data)
         serial = FollowlistSerializer(data=request.data)
         if serial.is_valid():
@@ -27,6 +26,7 @@ class followlist_class(APIView):
         return Response(serial.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def get(self,request,pk):
+        print("inside the get function")
         # followers = FollowList.objects.filter(followedBy=pk)
         # following = FollowList.objects.filter(following=pk)
         # serial_followers = FollowlistSerializer(followers,many=True)
@@ -68,14 +68,19 @@ def addposts(request,id):
 def getPosts(request,id):
     print("hai hai posts")
     myfollowers = FollowList.objects.filter(firstuser=id)
-    print(myfollowers)
     posts = []
     for i in myfollowers:
-        print(i.seconduser.id)
         posts.append(i.seconduser.id)
 
+    new = []
+
     p = Posts.objects.filter(user__in= posts).order_by('-id')
-    print(p)
+    print(p[1].user.fullname)
+    like = Likes.objects.all()
+    print(like)
+    for i in p:
+        print(i.user.fullname)
+
     
     postSer = PostSerializer(p,many=True)
     print("haiii")
@@ -86,7 +91,7 @@ def getPosts(request,id):
 # individual posts fetched from here
 @api_view(['GET'])
 def userPost(request,uid):
-    print("function l kayari")
+    print("userspost functions///")
     p = Posts.objects.filter(user_id=uid).order_by("-id")
     userPostSer = PostSerializer(p,many=True)
     return Response({"data":userPostSer.data})
@@ -104,4 +109,19 @@ def searchUser(request):
     results = UserdemoSerializer(res,many=True)
 
     return Response({'results':results.data})
+
+@api_view(['POST'])
+def isliked(request,id):
+    print('hai isliked function on backend ')
+    data  = request.data
+    userid = User.objects.get(id=id)
+    print(userid)
+    post = Posts.objects.get(id=data['id'])
+    liked = Likes(isLiked = userid.id,likedPost = post)
+    liked.save()
+    # Likes.isLiked.set(userid)
+    # Likes.likedPost.set(post)
+    print('success  ')
+    return Response({'results':data})
+
 

@@ -1,21 +1,21 @@
-*{
+/* *{
     position: inherit;
-}
+} */
 .itemconfiguration
 {
 		height:100vh;
         margin-top: 10px;
         border-radius: 20px;
 		width:90vh;
-		background-color:rgb(255, 255, 255);		
+		/* background-color:rgb(230, 216, 216);		 */
         overflow-y:auto;
 		float:left;
-		position:relative;
+		/* position:relative; */
 		margin-left:-5px;
 }
-.feedpagemain{
+/* .feedpagemain{
     padding-left: 25px;
-}
+} */
 .itemconfiguration::-webkit-scrollbar{
     display: none;
 }

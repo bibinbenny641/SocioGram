@@ -1,31 +1,44 @@
 import React from "react";
-import Header from "../components/Header";
-import { AuthProvider } from '../context/AuthContext'
 import './HomePage.css'
-import Sidebar from "../components/SideBar";
+
 import UserProfile from "../components/profile/UserProfile";
 import Topbar from "../components/topbar/Topbar";
 import Post from "../components/posts/Post";
 import FeedPage from "../components/posts/FeedPage";
+import { Row} from 'react-bootstrap'
+import SideBar from "../components/SideBar";
+import Share from "../components/share/Share";
+import Rightsidebar from "../components/Rightcontainer/rightsidebar/Rightsidebar";
 
 
 
 const HomePage = () => {
     return (
         <>
+            <div className="theme-light">
 
-            <Topbar />
-            <div className="Home_main_div">
+            <Row>
+                <div style={{position:'sticky'}}>
 
-                <Sidebar />
-                <FeedPage>
+                <Topbar />
+                </div>
+
+            </Row>
+            <Row>
+            <div style={{display:'flex'}}>
+                <SideBar/>
+                <div className="mainhomepage">
+                    <Share/>
+                    {/* <FeedPage> */}
+
                     <Post />
-
-                </FeedPage>
+                    
+                    {/* </FeedPage> */}
+                </div>
+                <Rightsidebar/>
+            </div> 
+            </Row>
             </div>
-            
-
-
         </>
     )
 }

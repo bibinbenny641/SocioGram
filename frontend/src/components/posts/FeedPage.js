@@ -1,28 +1,15 @@
 import React from 'react'
 import "./feedpage.css"
-function FeedPage({children}) {
+function FeedPage({ children }) {
   return (
     <>
-    <div className='container-fluid'>
-      
+      <div style={{ position: "fixed", marginTop:"0px" }} >
 
-
-    
-    <div className=' feedpagemain'>
-
- 
-      <div className=" itemconfiguration" >
-        
-        
-      	 {children}
-		</div>		      		
-
-    </div>
+        <div className=" itemconfiguration" >
+          {children}
+        </div>
 
       </div>
-    
-
-    
     </>
   )
 }

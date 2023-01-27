@@ -112,3 +112,6 @@
       font-size: 32px;
       text-shadow: 20px;
     }
+    .error{
+      color: red;
+    }

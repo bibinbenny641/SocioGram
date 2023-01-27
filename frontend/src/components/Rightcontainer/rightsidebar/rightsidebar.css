@@ -1,0 +1,172 @@
+.theme-light .rightBar {
+    flex: 3;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 70px;
+    height: calc(100vh - 70px);
+    overflow: scroll;
+    background-color: #f6f3f3;
+  }
+  @media (max-width: 480px) {
+    .theme-light .rightBar {
+      display: none;
+    }
+  }
+  @media (max-width: 960px) {
+    .theme-light .rightBar {
+      display: none;
+    }
+  }
+  .theme-light .rightBar::-webkit-scrollbar {
+    display: none;
+  }
+  .theme-light .rightBar .container {
+    padding: 20px;
+  }
+  .theme-light .rightBar .container .item {
+    box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09);
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: white;
+  }
+  .theme-light .rightBar .container .item span {
+    color: gray;
+  }
+  .theme-light .rightBar .container .item .user {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 20px 0px;
+  }
+  .theme-light .rightBar .container .item .user .userInfo {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    position: relative;
+  }
+  .theme-light .rightBar .container .item .user .userInfo img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    -o-object-fit: cover;
+       object-fit: cover;
+  }
+  .theme-light .rightBar .container .item .user .userInfo .online {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: limegreen;
+    position: absolute;
+    top: 0;
+    left: 30px;
+  }
+  .theme-light .rightBar .container .item .user .userInfo p {
+    color: #555;
+  }
+  .theme-light .rightBar .container .item .user .userInfo span {
+    font-weight: 500;
+    color: #000;
+  }
+  .theme-light .rightBar .container .item .user .buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .theme-light .rightBar .container .item .user .buttons button {
+    border: none;
+    padding: 5px;
+    color: white;
+    cursor: pointer;
+  }
+  .theme-light .rightBar .container .item .user .buttons button:first-child {
+    background-color: #5271ff;
+  }
+  .theme-light .rightBar .container .item .user .buttons button:last-child {
+    background-color: #f0544f;
+  }
+  .theme-dark .rightBar {
+    flex: 3;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 70px;
+    height: calc(100vh - 70px);
+    overflow: scroll;
+    background-color: #333;
+  }
+  @media (max-width: 480px) {
+    .theme-dark .rightBar {
+      display: none;
+    }
+  }
+  @media (max-width: 960px) {
+    .theme-dark .rightBar {
+      display: none;
+    }
+  }
+  .theme-dark .rightBar::-webkit-scrollbar {
+    display: none;
+  }
+  .theme-dark .rightBar .container {
+    padding: 20px;
+  }
+  .theme-dark .rightBar .container .item {
+    box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09);
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #222;
+  }
+  .theme-dark .rightBar .container .item span {
+    color: gray;
+  }
+  .theme-dark .rightBar .container .item .user {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 20px 0px;
+  }
+  .theme-dark .rightBar .container .item .user .userInfo {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    position: relative;
+  }
+  .theme-dark .rightBar .container .item .user .userInfo img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    -o-object-fit: cover;
+       object-fit: cover;
+  }
+  .theme-dark .rightBar .container .item .user .userInfo .online {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: limegreen;
+    position: absolute;
+    top: 0;
+    left: 30px;
+  }
+  .theme-dark .rightBar .container .item .user .userInfo p {
+    color: lightgray;
+  }
+  .theme-dark .rightBar .container .item .user .userInfo span {
+    font-weight: 500;
+    color: whitesmoke;
+  }
+  .theme-dark .rightBar .container .item .user .buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .theme-dark .rightBar .container .item .user .buttons button {
+    border: none;
+    padding: 5px;
+    color: white;
+    cursor: pointer;
+  }
+  .theme-dark .rightBar .container .item .user .buttons button:first-child {
+    background-color: #5271ff;
+  }
+  .theme-dark .rightBar .container .item .user .buttons button:last-child {
+    background-color: #f0544f;
+  }/*# sourceMappingURL=rightBar.css.map */

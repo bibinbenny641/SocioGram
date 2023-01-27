@@ -1,121 +1,122 @@
-*{
-    margin: 0;
-    padding: 0;
-    text-decoration: none;
-    position: sticky;
-    height: fit-content;
-    
+.theme-light .leftBar {
+  flex: 2;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 70px;
+  height: calc(100vh - 70px);
+  overflow: scroll;
+  background-color: white;
+  color: #000;
 }
-
-.sidebar_container{
-    display: flex;
-    flex-direction: row;
+@media (max-width: 480px) {
+  .theme-light .leftBar {
+    display: none;
+  }
 }
-
-
-.sidebar{
-    background: rgb(255, 255, 255);
-    color: rgb(243, 247, 242);
-    height: 100vh;
-    width: 300px;
-    transition: all 0.5s;
+.theme-light .leftBar::-webkit-scrollbar {
+  display: none;
 }
-.top_section{
-    display: flex;
-    align-items: center;
-    height: 10px;
-    padding: 20px 15px;
+.theme-light .leftBar .container {
+  padding: 20px;
 }
-
-.logo{
-    font-size: 25px;
-    
+.theme-light .leftBar .container hr {
+  margin: 20px 0px;
+  border: none;
+  height: 0.5px;
+  background-color: lightgray;
 }
-
-.bars{
-    display: flex;
-    font-size: 25px;
-    margin-left: 30px;
+.theme-light .leftBar .container .menu {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
-.link{
-    display: flex;
-    color: lightskyblue;
-    padding: 10px 15px;
-    gap: 15px;
-    transition: all 0.5s;
+.theme-light .leftBar .container .menu span {
+  font-size: 12px;
 }
-
-.link:hover{
-    background: lightskyblue;
-    color: #000;
-    transition: all 0.5s;
+.theme-light .leftBar .container .menu .user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
-
-.active{
-    background: lightskyblue;
-    color: #000;
+.theme-light .leftBar .container .menu .user img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
-
-.icon, .link_text{
-    font-size: 20px;
+.theme-light .leftBar .container .menu .user span {
+  font-size: 14px;
 }
-.btn-logout{
-    color: rgb(255, 255, 255);
-    border-radius: 10px;
-    margin-top: 10px;
+.theme-light .leftBar .container .menu .item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
-
-
-
-/* 
-*{
-    margin:0;
-    padding:0;
-    text-decoration: none;
+.theme-light .leftBar .container .menu .item img {
+  width: 30px;
 }
-.cont{
-    display:flex;
+.theme-light .leftBar .container .menu .item span {
+  font-size: 14px;
 }
-main{
-    width: 100%;
-    padding: 20px;
+.theme-dark .leftBar {
+  flex: 2;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 70px;
+  height: calc(100vh - 70px);
+  overflow: scroll;
+  background-color: #222;
+  color: whitesmoke;
 }
-.sidebar{
-    background: #000;
-    color: #fff;
-    height: 100vh;
-    width: 200px;
-    transition: all 0.5s;
+@media (max-width: 480px) {
+  .theme-dark .leftBar {
+    display: none;
+  }
 }
-.top_section{
-    display: flex;
-    align-items:center;
-    padding:20px 15px;
+.theme-dark .leftBar::-webkit-scrollbar {
+  display: none;
 }
-.logo{
-    font-size: 30px;
+.theme-dark .leftBar .container {
+  padding: 20px;
 }
-.bars{
-    display: flex;
-    font-size: 25px;
-    margin-left: 50px;
+.theme-dark .leftBar .container hr {
+  margin: 20px 0px;
+  border: none;
+  height: 0.5px;
+  background-color: #444;
 }
-.link{
-    display: flex;
-    color: #fff;
-    padding: 10px 15px;
-    gap: 15px;
-    transition: all 0.5s;
+.theme-dark .leftBar .container .menu {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
-.link:hover{
-    background:lightskyblue;
-    color: #000;
-    transition: all 0.5s;
+.theme-dark .leftBar .container .menu span {
+  font-size: 12px;
 }
-.active{
-    background: lightskyblue;
-    color: #000;
+.theme-dark .leftBar .container .menu .user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
-.icon, .link_text{
-    font-size: 20px;
-} */
+.theme-dark .leftBar .container .menu .user img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.theme-dark .leftBar .container .menu .user span {
+  font-size: 14px;
+}
+.theme-dark .leftBar .container .menu .item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.theme-dark .leftBar .container .menu .item img {
+  width: 30px;
+}
+.theme-dark .leftBar .container .menu .item span {
+  font-size: 14px;
+}/*# sourceMappingURL=leftBar.css.map */

@@ -3,31 +3,51 @@ import React, { useContext } from "react";
 import AuthContext from '../../context/AuthContext';
 import './userprofile.css'
 import { useState, useEffect } from "react";
-import Modal from 'react-bootstrap/Modal';
 import EditProfile from "../models/EditProfile";
-import { Navigate, useNavigate,Link } from "react-router-dom";
+import { Navigate, useNavigate, Link } from "react-router-dom";
 import AddPosts from "../models/AddPosts";
 import View_followers from "./Viewfollowers";
-import Card from 'react-bootstrap/Card';
-import ListGroup from 'react-bootstrap/ListGroup';
+import Rightbar from "../Rightcontainer/Rightbar";
+
+
+
+
+import FacebookTwoToneIcon from "@mui/icons-material/FacebookTwoTone";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import PinterestIcon from "@mui/icons-material/Pinterest";
+import TwitterIcon from "@mui/icons-material/Twitter";
+import PlaceIcon from "@mui/icons-material/Place";
+import LanguageIcon from "@mui/icons-material/Language";
+import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 
 function UserProfile() {
-  let { user,auth_user,currentuser,setCurrentuser } = useContext(AuthContext)
+  let { user, auth_user, currentuser, setCurrentuser } = useContext(AuthContext)
   const [userdata, setUserdata] = useState([])
   const [refresh, setRefresh] = useState(false)
-  const [newpost,setNewpost] = useState(false)
+  const [newpost, setNewpost] = useState(false)
   const [follower, setFollowers] = useState([])
   const [following, setFollowing] = useState([])
   const [smShow, setSmShow] = useState(false);
   const [lgShow, setLgShow] = useState(false);
   const [viewfollower, setViewfollower] = useState([])
   const [viewfollowing, setViewfollowing] = useState([])
-  const [post,setPost] =useState([])
-  const [usersfollower,setUsersfollower] = useState(true)
+  const [post, setPost] = useState([])
+  const [usersfollower, setUsersfollower] = useState(false)
+  const [usersfollowing, setUsersfollowing] = useState(false)
 
 
 
+  const follvr = function () {
+    setUsersfollower(true)
+    setUsersfollowing(false)
+  }
+  const follving = function () {
+    setUsersfollowing(true)
+    setUsersfollower(false)
+  }
   const navigate = useNavigate()
   let userlist = async (id) => {
     let response = await fetch(`http://127.0.0.1:8000/api/profile/${id}`, {
@@ -38,7 +58,6 @@ function UserProfile() {
     })
     let data = await response.json()
     if (response.status === 200) {
-      // setList(data.data)
       setUserdata(data.data)
 
     } else {
@@ -62,10 +81,9 @@ function UserProfile() {
 
       setFollowers(data.followers.length)
       setFollowing(data.following.length)
-      
       setViewfollower(data.followers)
       setViewfollowing(data.following)
-     
+
     } else {
       alert("Something went wrong!!")
 
@@ -84,50 +102,50 @@ function UserProfile() {
     let data = await response.json()
 
     if (response.status === 200) {
-      
+
       setPost(data.data)
-      
+
     } else {
       alert("Something went wrong!!")
 
     }
 
   }
-  function bibin(id){
+  function bibin(id) {
     setCurrentuser(id)
     userlist(id)
     folow(id)
-    
+
 
   }
 
-  let follow_function = async (id)=>{
+  let follow_function = async (id) => {
     console.log("following function clicked")
-   
-    
+
+
     let response = await fetch('http://127.0.0.1:8000/follow/follow/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body:JSON.stringify({"followedBy":user.user_id, "following":id})
+      body: JSON.stringify({ "firstuser": user.user_id, "seconduser": id })
 
     })
     let data = await response.json()
 
     if (response.status === 200) {
       console.log('bibbibibib');
-      
+
     } else {
       alert("this is wrong!!")
 
     }
   }
 
-  
+
 
   useEffect(() => {
-    userlist(currentuser)
+    userlist(user.user_id)
     folow(currentuser)
     usersPosts()
   }, [])
@@ -136,13 +154,85 @@ function UserProfile() {
     // setViewfollowers(false)
     setRefresh(false)
     setNewpost(false)
-    userlist(currentuser)
+    userlist(user.user_id)
   }, [refresh])
 
   return (
 
     <>
-      <div className="container-fluid overflow-auto  d-flex ">
+    
+    <div className="profile">
+      <div className="images">
+        <img
+          src="https://images.pexels.com/photos/13440765/pexels-photo-13440765.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+          alt=""
+          className="cover"
+        />
+        <img
+          src="https://images.pexels.com/photos/14028501/pexels-photo-14028501.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load"
+          alt=""
+          className="profilePic"
+        />
+      </div>
+      <div className="profileContainer">
+        <div className="uInfo">
+          <div className="left">
+            <a href="http://facebook.com">
+              <FacebookTwoToneIcon fontSize="large" />
+            </a>
+            <a href="http://facebook.com">
+              <InstagramIcon fontSize="large" />
+            </a>
+            <a href="http://facebook.com">
+              <TwitterIcon fontSize="large" />
+            </a>
+            <a href="http://facebook.com">
+              <LinkedInIcon fontSize="large" />
+            </a>
+            <a href="http://facebook.com">
+              <PinterestIcon fontSize="large" />
+            </a>
+          </div>
+          <div className="center">
+            <span>Jane Doe</span>
+            <div className="info">
+              <div className="item">
+                <PlaceIcon />
+                <span>USA</span>
+              </div>
+              <div className="item">
+                <LanguageIcon />
+                <span>lama.dev</span>
+              </div>
+            </div>
+            <button>follow</button>
+          </div>
+          <div className="right">
+            <EmailOutlinedIcon />
+            <MoreVertIcon />
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      {/* <div className="container-fluid overflow-auto  d-flex ">
 
         <div style={{ marginTop: "20px", marginLeft: "10px", boxShadow: "3px 3px 5px 6px #ccc", width: "80vh", height: "85vh" }} className=" overflow-auto container">
 
@@ -183,27 +273,28 @@ function UserProfile() {
           <div className=" row mt-3 text-center">
 
             {
-                user.user_id === currentuser?
+              user.user_id === currentuser ?
                 <div>
-            <EditProfile setRefresh={setRefresh} /><br></br><br></br>
-            <AddPosts setNewost={setNewpost} /><br></br><br></br>
-                  </div>
-            :
-            <button onClick={()=>{follow_function(currentuser)}} type="button" className="btn btn-outline-success">Follow</button>
+                  <EditProfile setRefresh={setRefresh} /><br></br><br></br>
+                  <AddPosts setNewost={setNewpost} /><br></br><br></br>
+                </div>
+                :
+                <button onClick={() => { follow_function(currentuser) }} type="button" className="btn btn-outline-success">Follow</button>
 
-          }
+            }
 
             <div className="col-lg-6 col-sm-12 ">
 
-              <div className="stats">
+              <div onClick={() => (follvr())} className="stats">
                 <h6 onClick={() => setLgShow(true)} className="text-muted d-block mb-2">follower</h6>
                 <span onClick={() => setLgShow(true)} className="text-muted d-block mb-2">{follower}</span>
 
               </div>
 
             </div>
+
             <div className="col-lg-6 col-sm-12">
-              <div style={{ paddingTop: "0px" }} className="stats">
+              <div onClick={() => (follving())} style={{ paddingTop: "0px" }} className="stats">
                 <h6 onClick={() => setLgShow(true)} className="text-muted d-block mb-2">following</h6>
                 <span onClick={() => setLgShow(true)} className="text-muted d-block mb-2">{following}</span>
 
@@ -211,22 +302,25 @@ function UserProfile() {
 
             </div>
           </div>
+          {usersfollower ? <div><Rightbar propsFollower={viewfollower} userlist={userlist} folow={folow} usersfollower={usersfollower} /></div> : null}
+          {usersfollowing ? <div><Rightbar propsFollower={viewfollowing} userlist={userlist} folow={folow} usersfollower={usersfollower} /></div> : null}
+
           <div style={{ borderRadius: "15px" }} className="container-fluid">
             <div className="card text-white  mb-3" >
               <div className="card-header text-warning "><span className="text-success">Posts</span></div>
               <div className="card-body">
                 {post.map((po) => {
-                  return(
+                  return (
 
                     <div className="loop postimage">
-                    
-                      <img style={{height:"100px",width:"100px",borderRadius:"10px"}} src={`http://127.0.0.1:8000${po.postImage}`}   />
+
+                      <img style={{ height: "100px", width: "100px", borderRadius: "10px" }} src={`http://127.0.0.1:8000${po.postImage}`} />
 
                     </div>
-                
-                )
+
+                  )
                 })}
-                
+
                 <div className="loop postimage">
 
                 </div>
@@ -235,82 +329,13 @@ function UserProfile() {
                 </div>
               </div>
             </div>
-
-
           </div>
-
-
         </div>
-      </div>
+      </div> */}
 
 
 
-      <Modal
-        size="md"
-        show={lgShow}
-        onHide={() => setLgShow(false)}
-        aria-labelledby="example-modal-sizes-title-lg"
-      >
-        <Modal.Header closeButton>
-          <Modal.Title id="example-modal-sizes-title-lg">
-            hai  {userdata.fullname}
-          </Modal.Title>
-        </Modal.Header>
 
-
-        <Modal.Body>
-
-
-          <Card style={{ width: '18 rem' }}>
-            <ListGroup variant="flush">
-              {/* {
-                viewfollower.map((foll) => (
-
-                  <ListGroup.Item key="{foll.id}">{foll.followingByUname}</ListGroup.Item>
-                )
-
-                )
-              } */
-              <div className="row">
-                <div style={{background:"grey",borderRadius:'30px'}} className="col-md-6">
-                <h6 onClick={()=>{setUsersfollower(true)}}><center>followers</center></h6>
-                </div>
-                <div style={{background:"grey",borderRadius:'30px'}} className="col-md-6">
-                <h6 onClick={()=>{setUsersfollower(false)}}><center>following</center></h6>
-                </div>
-                
-                <div>
-                  {
-                  usersfollower ? 
-                  
-                    viewfollower.map((foll) => (
-                        
-                      <p style={{paddingLeft:"20px"}} onClick={()=>{bibin(foll.currentuser)}} key={foll.id}>{foll.followedByUname}</p>
-                    )
-    
-                    )
-                  :
-                  viewfollowing.map((foll) => (
-
-                    <p onClick={()=>(setCurrentuser(foll.currentuser))} key={foll.id}>{foll.secondUname}</p>
-                  )
-  
-                  )
-                  }
-                  
-                </div>
-
-              </div>
-              }
-
-            </ListGroup>
-          </Card>
-
-
-
-        </Modal.Body>
-      </Modal>
-      
 
 
 

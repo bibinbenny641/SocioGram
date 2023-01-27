@@ -14,16 +14,17 @@ export const AuthProvider = ({children}) =>{
             position: 'bottom-right',
         })
 
-    
-
     let [user,setUser] = useState( localStorage.getItem('authTokens') ?(jwt_decode(JSON.parse(localStorage.getItem('authTokens')).access)):null)
     console.log(user)
-    let [currentuser,setCurrentuser] = useState(user.user_id)
-    let [auth_user,setAuth_user] = useState(user.user_id)
     let [authTokens,setAuthTokens] = useState(()=> localStorage.getItem('authTokens') ? jwt_decode(localStorage.getItem('authTokens')):null)
-
+    
+    let [currentuser,setCurrentuser] = useState(user?.user_id)
+    // let [currentuser,setCurrentuser] = useState({ authTokens: authTokens ? user.user_id :null } )
+    let [auth_user,setAuth_user] = useState(user?.user_id)
+    const [ modal,setModal] =useState(false)
     let navigate = useNavigate()
 
+    console.log(user,"111111111111111111111111111111111111111")
     
     let loginUser = async(e)=>{
         e.preventDefault()
@@ -60,7 +61,7 @@ export const AuthProvider = ({children}) =>{
             }
 
         }else{
-            generateError("please fill the details properly")
+            generateError("Invalid Credentials")
         }
     
     }
@@ -73,34 +74,7 @@ export const AuthProvider = ({children}) =>{
         navigate("login/",{replace:true})
     }
 
-    let signupUser = async(e)=>{
-        e.preventDefault()
-        console.log("ayyoooo")
-        let response = await fetch('http://127.0.0.1:8000/api/register/',{
-            method:'POST',
-            headers:{
-                'Content-Type':'application/json'
-            },
-
-            body:JSON.stringify({'fullname':e.target.fullname.value,'password1':e.target.password1.value,'password2':e.target.password2.value,'phoneno':e.target.phoneno.value,'email':e.target.email.value})
-            
-        })
-        let data = await response.json()
-        console.log(data)
-        console.log("errir");
-        if (response.status===400){
-            
-            generateError(data)
-            navigate('/register')
-        }
-        if (response.status===200){
-            navigate('/login')
-            generateError(data)
-        }else{
-            generateError(data)
-        }
     
-    }
     //....................adminlogin......................
 
     let loginAdmin = async(e)=>{
@@ -142,39 +116,12 @@ export const AuthProvider = ({children}) =>{
         navigate("admin/",{replace:true})
     }
 
-    // let editPro = async(e)=>{
-    //     e.preventDefault()
-        
-    //     let response = await fetch(`http://127.0.0.1:8000/api/editpro/${user.user_id}`,{
-    //         method:'PUT',
-    //         headers:{
-    //             'Content-Type':'application/json'
-    //         },
-
-    //         body:JSON.stringify({'fullname':e.target.fullname.value,'user_name':e.target.username.value,'email':e.target.email.value})
-            
-    //     })
-    //     let data = await response.json()
-        
-    //     console.log("success ")
-
-    //     if (response.status===400){
-    //         alert("othilla mwonuse")
-    //         navigate('/')
-    //     } else{
-    //         alert("all set")
-    //         navigate('/myprofile')
-    //     }
-    
-    // }
-
     
     let contextData = {
         user:user,
         loginUser:loginUser,
         authTokens:authTokens,
         logoutUser:logoutUser,
-        signupUser:signupUser,
         loginAdmin:loginAdmin,
         logoutAdmin:logoutAdmin,
         currentuser:currentuser,
