@@ -1,18 +1,29 @@
+
+
 .theme-light .leftBar {
   flex: 2;
   position: -webkit-sticky;
   position: sticky;
   top: 70px;
-  height: calc(100vh - 70px);
+  max-width: 40vh;
+  /* height: calc(100vh - 70px); */
+  height: 50vh;
   overflow: scroll;
+  width: 40vh;
+  /* background-color: rgb(222, 20, 20); */
+  color: rgb(17, 18, 16);
+  /* padding: 10px 10px 20px 10px;
+  border: 1px solid #BFBFBF;
   background-color: white;
-  color: #000;
+  box-shadow: 10px 10px 5px #aaaaaa;
+  margin-top: 20px; */
+  /* margin-right: 20px; */
 }
-@media (max-width: 480px) {
+/* @media (max-width: 480px) {
   .theme-light .leftBar {
     display: none;
   }
-}
+} */
 .theme-light .leftBar::-webkit-scrollbar {
   display: none;
 }
@@ -23,7 +34,7 @@
   margin: 20px 0px;
   border: none;
   height: 0.5px;
-  background-color: lightgray;
+  background-color: rgb(197, 166, 166);
 }
 .theme-light .leftBar .container .menu {
   display: flex;
@@ -119,4 +130,4 @@
 }
 .theme-dark .leftBar .container .menu .item span {
   font-size: 14px;
-}/*# sourceMappingURL=leftBar.css.map */
+}

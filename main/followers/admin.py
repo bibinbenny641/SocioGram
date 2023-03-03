@@ -1,6 +1,8 @@
 from django.contrib import admin
-from .models import *
+from.models import FollowList,Posts,Like
 
 # Register your models here.
 
-admin.site.register(Likes)
+admin.site.register(FollowList)
+admin.site.register(Posts)
+admin.site.register(Like)

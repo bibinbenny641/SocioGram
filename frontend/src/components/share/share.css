@@ -6,6 +6,8 @@
     margin-bottom: 20px;
   }
   .theme-light .share .container {
+    background-color: rgb(172, 172, 218);
+    border-radius: 30px;
     padding: 20px;
   }
   .share .container .top {
@@ -130,4 +132,4 @@
     cursor: pointer;
     background-color: #5271ff;
     border-radius: 3px;
-  }/*# sourceMappingURL=share.css.map */
+  }

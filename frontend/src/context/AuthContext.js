@@ -24,8 +24,6 @@ export const AuthProvider = ({children}) =>{
     const [ modal,setModal] =useState(false)
     let navigate = useNavigate()
 
-    console.log(user,"111111111111111111111111111111111111111")
-    
     let loginUser = async(e)=>{
         e.preventDefault()
         console.log("form submitted")
@@ -39,12 +37,7 @@ export const AuthProvider = ({children}) =>{
             body:JSON.stringify({'email':e.target.email.value, 'password':e.target.password.value})
         })
         let data = await response.json()
-        console.log("aaaaaaaaaaaaaaaaaaaaadddddddddddd")
-        console.log('response',response)
         if(response.status === 200){
-            console.log("ffffffffffffffffffff")
-            console.log(user)
-            
             setAuthTokens(data)
             setUser(jwt_decode(data.access))
             let c=jwt_decode(data.access)
@@ -71,7 +64,7 @@ export const AuthProvider = ({children}) =>{
         localStorage.removeItem('authTokens')
         
         console.log("jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj")
-        navigate("login/",{replace:true})
+        navigate("/login",{replace:true})
     }
 
     
@@ -90,16 +83,13 @@ export const AuthProvider = ({children}) =>{
             body:JSON.stringify({'email':e.target.email.value, 'password':e.target.password.value})
         })
         let data = await response.json()
-        console.log('data',data)
-        console.log("hfjhgdjhgdjhgdfjghdfjhgdfjg")
-        console.log('response',response)
         if(response.status === 200){
             console.log("ffffffffffffffffffff")
             setAuthTokens(data)
             setUser(jwt_decode(data.access))
             localStorage.setItem('authTokens',JSON.stringify(data))
             
-            navigate("/dashboard")
+            navigate("/admin/dashboard")
 
         }else{
             

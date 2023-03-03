@@ -22,6 +22,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 import MessagePage from './pages/MessagePage';
 import Topbar from "./components/topbar/Topbar";
+import AdminHome from "./pages/admin/adminPages/AdminHome";
+import AdminPosts from "./pages/admin/adminPages/AdminPosts";
 
 
 function App() {
@@ -46,15 +48,23 @@ function App() {
         <Route exact path="/" element={<HomePage />} /> 
         </Route>
        
-       <Route element={<AdminLogin/>} path="/admin" />
-
-       <Route exact path="/" element={<PrivateRoute/>}  > 
-       <Route element={<Dashboard/>} path="/dashboard" />
-       </Route>
+       
     
         <Route element={<HomePage/>} path="/" /> 
-        <Route element={<ProfilePage/>} path="/myprofile" />
+        <Route element={<ProfilePage/>} path="/profile/:usersid" />
         <Route element={<MessagePage/>} path="/message" />
+
+
+        {/* admin  */}
+
+        <Route element={<AdminLogin/>} path="/admin" />
+
+       <Route exact path="/" element={<PrivateRoute/>}  > 
+       <Route element={<AdminHome/>} path="/admin/dashboard" />
+       </Route>
+       <Route exact path="/" element={<PrivateRoute/>}  > 
+       <Route element={<AdminPosts/>} path="/admin/posts" />
+       </Route>
         
         </Routes>
         </AuthProvider>

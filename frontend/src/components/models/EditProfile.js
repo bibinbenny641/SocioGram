@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { Link, useNavigate } from 'react-router-dom'
 import AuthContext from '../../context/AuthContext';
-import './addpost.css'
+// import './addpost.css'
 
 function EditProfile({refresh,setRefresh}) {
   let {user} = useContext(AuthContext)
@@ -43,9 +43,12 @@ function EditProfile({refresh,setRefresh}) {
   
   return (
     <>
-      <Button className='addpostbutton' variant="primary" onClick={handleShow}>
+    <center>
+
+      <Button style={{color:'green'}} className='addpostbutton' variant="danger" onClick={handleShow}>
          Edit Profile
       </Button>
+    </center>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
@@ -66,13 +69,13 @@ function EditProfile({refresh,setRefresh}) {
             
             <center>
 
-            <button className='btn-primary addpostbutton' onClick={handleClose} >Save</button>
+            <button style={{color:'green'}} className=' addpostbutton' onClick={handleClose} >Save</button>
             </center>
             
         </form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant="primary" onClick={handleClose}>
             Close
           </Button>
           {/* <Button variant="primary" >

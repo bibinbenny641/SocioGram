@@ -3,54 +3,30 @@ import UserProfile from '../components/profile/UserProfile'
 import SideBar from '../components/SideBar'
 import Topbar from '../components/topbar/Topbar'
 import { Row, Col } from 'react-bootstrap'
+import Rightsidebar from '../components/Rightcontainer/rightsidebar/Rightsidebar'
 
 
 function ProfilePage() {
   return (
     <>
-      {/* <Row>
-                <div style={{position:'sticky'}}>
-
-                <Topbar/>
-                </div>
-
-            </Row>
-      <Row >
-        
-
-        <div style={{ display: 'flex' }}>
-          <SideBar />
-          <div>
-          <UserProfile />
-            
+      <div className="theme-light">
+        <Row>
+          <div style={{ position: 'sticky' }}>
+            <Topbar />
           </div>
-          <SideBar />
-        </div>
-      </Row> */}
+        </Row>
+        <Row>
+          <div style={{ display: 'flex' }}>
+            <SideBar />
+            <div style={{ height: '70vh', overflow: "scroll",paddingTop:"20px",marginTop:"30px", border:"rounded"}}>
 
+              <UserProfile />
 
-
-
-<div className="theme-light">
-
-            <Row>
-                <div style={{position:'sticky'}}>
-
-                <Topbar />
-                </div>
-
-            </Row>
-            <Row>
-            <div style={{display:'flex'}}>
-                <SideBar/>
-                <div>
-                  {/* <UserProfile/>
-                  <UserProfile/> */}
-                </div>
-                <SideBar/>
-            </div> 
-            </Row>
             </div>
+            <Rightsidebar />
+          </div>
+        </Row>
+      </div>
     </>
   )
 }

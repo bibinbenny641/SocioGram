@@ -4,6 +4,8 @@
     position: sticky;
     top: 70px;
     height: calc(100vh - 70px);
+    height:55vh;
+    width: 40px;
     overflow: scroll;
     background-color: #f6f3f3;
   }
@@ -169,4 +171,8 @@
   }
   .theme-dark .rightBar .container .item .user .buttons button:last-child {
     background-color: #f0544f;
-  }/*# sourceMappingURL=rightBar.css.map */
+  }
+  .container{
+    width: 50px;
+    /* background-color: green; */
+  }

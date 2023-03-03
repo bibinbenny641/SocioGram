@@ -13,122 +13,59 @@ import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { Link } from "react-router-dom";
 import Comments from "../comments/Comments";
+import InnerPost from "./InnerPost";
+import { useNavigate} from 'react-router-dom'
 
-
-
-
-export default function Post({ post }) {
+export default function Post({ setLoading }) {
   let { user } = useContext(AuthContext)
   const [viewposts, setViewposts] = useState([])
-  const liked = false;
-  console.log(user,'thankan njanada')
-
-  console.log(viewposts)
+  let {logoutUser} = useContext(AuthContext)
+  let navigate = useNavigate()
 
 
+  let [authTokens, setAuthTokens] = useState(() => localStorage.getItem('authTokens') ? localStorage.getItem('authTokens') : null)
+  
   let postGet = async () => {
 
     let response = await fetch(`http://127.0.0.1:8000/follow/getposts/${user.user_id}/`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer  ${String(JSON.parse(authTokens).access)}`
       },
 
     })
     let data = await response.json()
 
     if (response.status === 200) {
+
+      setLoading(false)
       setViewposts(data.data)
     } else {
-      alert("Something went wrong!!")
+      
+      logoutUser()
 
     }
   }
-
-  let likebutton = async (id)=>{
-    
-    console.log(id)
-    console.log("haiiiiiiiiii new function")
-    let response = await fetch(`http://127.0.0.1:8000/follow/isliked/${user.user_id}/`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body:JSON.stringify({id})
-
-    })
-    let data = await response.json()
-
-    if (response.status === 200) {
-      console.log('kittypooyiiiiiiiiiiiiiiii')
-    } else {
-      alert("Something went wrong!!")
-
-    }
-  }
-
-
-
-
 
   useEffect(() => {
     postGet()
-  }, [])
-  const [commentOpen, setCommentOpen] = useState(false);
-
+  }, [],)
 
   return (
     <>
-      <div className="main">
-        {
+    
+    
 
-          viewposts.map((foll) => (
+      {
+        viewposts.map((foll, i) => (
+          <div key={i}>
+            <InnerPost foll={foll} Comments={Comments} postGet={postGet} />
+          </div>
 
+        ))
+      }
 
-            <div className="post">
-              <div className="container">
-                <div className="user">
-                  <div className="userInfo">
-                    <img style={{ height: "50px", borderRadius: "50px", width: "50px" }} src={`http://127.0.0.1:8000${foll.postImage}`} alt="" />
-                    <div className="details">
-                      <Link
-                        to={`/profile/${foll.user}`}
-                        style={{ textDecoration: "none", color: "inherit" }}
-                      >
-                        <span className="name">{foll.username}</span>
-                      </Link>
-                      <span className="date">1 min ago</span>
-                    </div>
-                  </div>
-                  <MoreHorizIcon />
-                </div>
-                <div className="content">
-                  <p>{foll.postCaptioin}</p>
-                  <img style={{ height: '50vh', width: '70vh' }} src={`http://127.0.0.1:8000${foll.postImage}`} alt="" />
-                </div>
-                <div className="info">
-                  <div className="item">
-                    <span onClick={()=>{likebutton(foll.id)}}>
-
-                    {liked ? <FavoriteOutlinedIcon /> : <FavoriteBorderOutlinedIcon />}
-                  </span>
-                    <span>12 Likes</span>
-                  </div>
-                  <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
-                    <TextsmsOutlinedIcon />
-                    12 Comments
-                  </div>
-                  <div className="item">
-                    <ShareOutlinedIcon />
-                    Share
-                  </div>
-                </div>
-                {commentOpen && <Comments />}
-              </div>
-            </div>
-          ))
-        }
-      </div>
     </>
   );
 }

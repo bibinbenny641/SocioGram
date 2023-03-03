@@ -6,8 +6,12 @@ import AuthContext from '../../context/AuthContext';
 
 
 import { BsChatText } from "react-icons/bs";
+import Post from '../posts/Post';
+import AddPosts from '../models/AddPosts';
 
 function Message() {
+  let [authTokens, setAuthTokens] = useState(() => localStorage.getItem('authTokens') ? localStorage.getItem('authTokens') : null)
+  let {logoutUser} = useContext(AuthContext)
     
   const [show, setShow] = useState(false);
   const [userChat, setUserChat] = useState(false);
@@ -30,6 +34,7 @@ function Message() {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer  ${String(JSON.parse(authTokens).access)}`
       },
 
     })
@@ -40,7 +45,7 @@ function Message() {
       setMyfollowers(data.following)
 
     } else {
-      alert("Something went wrong!!")
+      logoutUser()
 
     }
   }
@@ -51,7 +56,7 @@ function Message() {
   }, [])
   return (
     <>
-    <div className='container-fluid' style={{ marginLeft: '10px' }}>
+    {/* <div className='container-fluid' style={{ marginLeft: '10px' }}>
           <div style={{ border: 'none', height: '80vh', width: '70vh', marginLeft: '35px' }} className='container mt-5 overflow-x'>
             <p style={{ color: 'red' }}>chat with me</p>
             {
@@ -97,12 +102,17 @@ function Message() {
                   </div>
 
                 </div>
+                
 
               ))}
+              <h1 className="text-3xl font-bold underline">
+      Hello world!
+    </h1>
 
           </div>
 
-        </div>
+        </div> */}
+        
     
     
     </>

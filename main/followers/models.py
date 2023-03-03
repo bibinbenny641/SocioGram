@@ -2,7 +2,7 @@ from django.db import models
 from adminSide.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-import datetime 
+from datetime import datetime 
 # Create your models here.
 class FollowList(models.Model):
     seconduser = models.ForeignKey(User ,on_delete= models.CASCADE,related_name='followingr')
@@ -28,8 +28,8 @@ class Posts(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,related_name="posts")
     username = models.CharField(max_length=255,null=True)
     date = models.TimeField(auto_now_add=True)
+    time = models.DateTimeField(blank=datetime.now())
     visibility = models.BooleanField(default=True)
-    # isLiked = models.OneToOneField(User,on_delete=models.CASCADE)
     likeCount = models.IntegerField(blank=True,null=True)
 
 @receiver(post_save,sender=Posts)
@@ -38,9 +38,18 @@ def addUsername(sender,instance,**kwargs):
 
 
 
-class Likes(models.Model):
-    isLiked = models.ManyToManyField(User)
-    likedPost = models.ForeignKey(Posts,on_delete=models.CASCADE)
+class Like(models.Model):
+    islike = models.BooleanField(default=False,blank=True)
+    likedby = models.ForeignKey(User,on_delete=models.CASCADE)
+    likedPost = models.ForeignKey(Posts,on_delete=models.CASCADE,related_name='liked_post')
+
+
+class Comments(models.Model):
+    post = models.ForeignKey(Posts,on_delete=models.CASCADE)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    comment = models.TextField(max_length=255)
+    
+
 
 
 

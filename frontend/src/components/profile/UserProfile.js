@@ -9,9 +9,6 @@ import AddPosts from "../models/AddPosts";
 import View_followers from "./Viewfollowers";
 import Rightbar from "../Rightcontainer/Rightbar";
 
-
-
-
 import FacebookTwoToneIcon from "@mui/icons-material/FacebookTwoTone";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import InstagramIcon from "@mui/icons-material/Instagram";
@@ -22,24 +19,41 @@ import LanguageIcon from "@mui/icons-material/Language";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
+import {
+  Badge,
+  Button,
+  Center,
+  Flex,
+  Heading,
+  Image,
+  Stack,
+  Text,
+  Box,
+  Avatar,
+  useColorModeValue,
+  Tab, TabList, TabPanel, TabPanels, Tabs,
+} from '@chakra-ui/react';
+import { useParams } from "react-router-dom";
+
 
 function UserProfile() {
+  let [authTokens, setAuthTokens] = useState(() => localStorage.getItem('authTokens') ? localStorage.getItem('authTokens') : null)
   let { user, auth_user, currentuser, setCurrentuser } = useContext(AuthContext)
+  let {logoutUser} = useContext(AuthContext)
   const [userdata, setUserdata] = useState([])
   const [refresh, setRefresh] = useState(false)
   const [newpost, setNewpost] = useState(false)
   const [follower, setFollowers] = useState([])
-  const [following, setFollowing] = useState([])
-  const [smShow, setSmShow] = useState(false);
-  const [lgShow, setLgShow] = useState(false);
+  const [following, setFollowing] = useState([])    
   const [viewfollower, setViewfollower] = useState([])
   const [viewfollowing, setViewfollowing] = useState([])
   const [post, setPost] = useState([])
   const [usersfollower, setUsersfollower] = useState(false)
   const [usersfollowing, setUsersfollowing] = useState(false)
 
-
-
+  const { usersid } = useParams();
+  console.log(usersid,user.user_id,'jajaj')
+  
   const follvr = function () {
     setUsersfollower(true)
     setUsersfollowing(false)
@@ -49,35 +63,40 @@ function UserProfile() {
     setUsersfollower(false)
   }
   const navigate = useNavigate()
-  let userlist = async (id) => {
-    let response = await fetch(`http://127.0.0.1:8000/api/profile/${id}`, {
+  let userlist = async (usersid) => {
+    let response = await fetch(`http://127.0.0.1:8000/api/profile/${usersid}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer  ${String(JSON.parse(authTokens).access)}`
       },
     })
     let data = await response.json()
     if (response.status === 200) {
       setUserdata(data.data)
+      
 
     } else {
-      alert("Something went wrong!!")
+      alert("KITTY ")
     }
 
   }
-  let folow = async (id) => {
+  let folow = async (usersid) => {
+    console.log(usersid,'iside follow functions sssss')
 
-    let response = await fetch(`http://127.0.0.1:8000/follow/follow/${id}/`, {
+    let response = await fetch(`http://127.0.0.1:8000/follow/follow/${usersid}/`, {
       method: 'GET',
-      headers: {
+      headers: { 
         'Content-Type': 'application/json',
+        Authorization: `Bearer  ${String(JSON.parse(authTokens).access)}`
+
+
       },
 
     })
     let data = await response.json()
 
     if (response.status === 200) {
-      console.log(data);
 
       setFollowers(data.followers.length)
       setFollowing(data.following.length)
@@ -85,14 +104,14 @@ function UserProfile() {
       setViewfollowing(data.following)
 
     } else {
-      alert("Something went wrong!!")
+      logoutUser()
 
     }
 
   }
 
   let usersPosts = async () => {
-    let response = await fetch(`http://127.0.0.1:8000/follow/userpost/${currentuser}/`, {
+    let response = await fetch(`http://127.0.0.1:8000/follow/userpost/${usersid}/`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -111,126 +130,240 @@ function UserProfile() {
     }
 
   }
-  function bibin(id) {
-    setCurrentuser(id)
-    userlist(id)
-    folow(id)
 
 
-  }
+  
 
-  let follow_function = async (id) => {
-    console.log("following function clicked")
+  // let follow_function = async (id) => {
+  //   console.log("following function clicked")
 
 
-    let response = await fetch('http://127.0.0.1:8000/follow/follow/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ "firstuser": user.user_id, "seconduser": id })
+  //   let response = await fetch('http://127.0.0.1:8000/follow/follow/', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify({ "firstuser": user.user_id, "seconduser": id })
 
-    })
-    let data = await response.json()
+  //   })
+  //   let data = await response.json()
 
-    if (response.status === 200) {
-      console.log('bibbibibib');
+  //   if (response.status === 200) {
+  //     console.log('bibbibibib');
 
-    } else {
-      alert("this is wrong!!")
+  //   } else {
+  //     alert("this is wrong!!")
 
-    }
-  }
+  //   }
+  // }
 
 
 
   useEffect(() => {
-    userlist(user.user_id)
-    folow(currentuser)
-    usersPosts()
+    userlist(usersid)
+    folow(usersid)
+    // usersPosts()
   }, [])
 
   useEffect(() => {
     // setViewfollowers(false)
     setRefresh(false)
     setNewpost(false)
-    userlist(user.user_id)
+    userlist(usersid)
   }, [refresh])
 
   return (
 
     <>
-    
-    <div className="profile">
-      <div className="images">
-        <img
-          src="https://images.pexels.com/photos/13440765/pexels-photo-13440765.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-          alt=""
-          className="cover"
-        />
-        <img
-          src="https://images.pexels.com/photos/14028501/pexels-photo-14028501.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load"
-          alt=""
-          className="profilePic"
-        />
-      </div>
-      <div className="profileContainer">
-        <div className="uInfo">
-          <div className="left">
-            <a href="http://facebook.com">
-              <FacebookTwoToneIcon fontSize="large" />
-            </a>
-            <a href="http://facebook.com">
-              <InstagramIcon fontSize="large" />
-            </a>
-            <a href="http://facebook.com">
-              <TwitterIcon fontSize="large" />
-            </a>
-            <a href="http://facebook.com">
-              <LinkedInIcon fontSize="large" />
-            </a>
-            <a href="http://facebook.com">
-              <PinterestIcon fontSize="large" />
-            </a>
-          </div>
-          <div className="center">
-            <span>Jane Doe</span>
-            <div className="info">
-              <div className="item">
-                <PlaceIcon />
-                <span>USA</span>
-              </div>
-              <div className="item">
-                <LanguageIcon />
-                <span>lama.dev</span>
-              </div>
-            </div>
-            <button>follow</button>
-          </div>
-          <div className="right">
-            <EmailOutlinedIcon />
-            <MoreVertIcon />
-          </div>
-        </div>
-      </div>
-    </div>
+      <Center py={6}>
+        <Box
+          maxW={'550px'}
+          w={'full'}
+          bg={useColorModeValue('white', 'gray.900')}
+          boxShadow={'2xl'}
+          rounded={'lg'}
+          p={6}
+          textAlign={'center'}>
+          <Avatar
+            size={'xl'}
+            src={
+              'https://cdn-icons-png.flaticon.com/512/21/21104.png'
+            }
+            alt={'Avatar Alt'}
+            mb={4}
+            pos={'relative'}
+            _after={{
+              content: '""',
+              w: 4,
+              h: 4,
+              bg: 'green.300',
+              border: '2px solid white',
+              rounded: 'full',
+              pos: 'absolute',
+              bottom: 0,
+              right: 3,
+            }}
+          />
+          
+          
+          <Heading fontSize={'2xl'} fontFamily={'body'}>
+            {userdata.fullname}
+          </Heading>
+          <Text fontWeight={600} color={'gray.500'} mb={4}>
+            {userdata.user_name}
+          </Text>
+          <Text
+            textAlign={'center'}
+            color={useColorModeValue('gray.700', 'gray.400')}
+            px={3}>
+            Actress, musician, songwriter and artist. PM for work inquires or{' '}
+            <Link href={'#'} color={'blue.400'}>
+              #tag
+            </Link>{' '}
+            me in your posts
+          </Text>
+
+          <Stack align={'center'} justify={'center'} direction={'row'} mt={6}>
+            <Badge
+              px={2}
+              py={1}
+              bg={useColorModeValue('gray.50', 'gray.800')}
+              fontWeight={'400'}>
+              #art
+            </Badge>
+            <Badge
+              px={2}
+              py={1}
+              bg={useColorModeValue('gray.50', 'gray.800')}
+              fontWeight={'400'}>
+              #photography
+            </Badge>
+            <Badge
+              px={2}
+              py={1}
+              bg={useColorModeValue('gray.50', 'gray.800')}
+              fontWeight={'400'}>
+              #music
+            </Badge>
+          </Stack>
+          <Stack align={'center'} justify={'center'} direction={'row'} mt={6}>
+            <Badge onClick={() => (follvr())} px={4}
+              py={1}
+              bg={useColorModeValue('gray.50', 'gray.800')}
+              fontWeight={'400'}
+              color={'green'}>
+
+              followers
+              <br></br>
+              <span><strong>{follower}</strong></span>
+            </Badge>
+            <Badge onClick={() => (follving())} px={4}
+              py={1}
+              bg={useColorModeValue('gray.50', 'gray.800')}
+              fontWeight={'400'}
+              color={'green'}>
+              following
+              <br></br>
+
+              <span><strong>{following}</strong></span>
+            </Badge>
+            <Badge onClick={() => (follving())} px={4}
+              py={1}
+              bg={useColorModeValue('gray.50', 'gray.800')}
+              fontWeight={'400'}
+              color={'green'}>
+              Posts
+              <br></br>
+
+              <span><strong>6</strong></span>
+            </Badge>
+
+          </Stack>
+
+          <Stack mt={8} direction={'row'} spacing={4}>
+          
+          {usersid == user.user_id?
+          <EditProfile setRefresh={setRefresh} />
+          
+          // <Button
+          //   flex={1}
+          //   fontSize={'sm'}
+          //   rounded={'full'}
+          //   _focus={{
+          //     bg: 'gray.500',
+          //   }}>
+              
+          //   Edit
+          // </Button>
+
+           : 
+          <Button
+            flex={1}
+            fontSize={'sm'}
+            rounded={'full'}
+            bg={'blue.400'}
+            color={'white'}
+            boxShadow={
+              '0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)'
+            }
+            _hover={{
+              bg: 'blue.500',
+            }}
+            _focus={{
+              bg: 'blue.500',
+            }}>
+            Follow
+          </Button>
+          
+           } 
+        </Stack>
+
+          {usersfollower ?
+            <Tabs isFitted variant='enclosed'>
+              <TabList mb='1em'>
+                <Tab>followers</Tab>
+                {/* <Tab>Two</Tab> */}
+              </TabList>
+              <TabPanels>
+                <TabPanel>
+                <Rightbar propsFollower={viewfollower} userlist={userlist} folow={folow} usersfollower={usersfollower}/>
+                  
+                </TabPanel>
+                  {/* <TabPanel>
+                <p>two!</p>
+              </TabPanel> */}
+              </TabPanels>
+            </Tabs> :
+            null
+          }
+          {usersfollowing ?
+            <Tabs isFitted variant='enclosed'>
+              <TabList mb='1em'>
+                <Tab>following</Tab>
+                {/* <Tab>Two</Tab> */}
+              </TabList>
+              <TabPanels>
+                <TabPanel>
+                <Rightbar propsFollower={viewfollowing} userlist={userlist} folow={folow} usersfollower={usersfollower} />
+                  
+                </TabPanel>
+                  {/* <TabPanel>
+                <p>two!</p>
+              </TabPanel> */}
+              </TabPanels>
+            </Tabs> :
+            null
+          }
+
+        </Box>
+      </Center>
 
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
+      
 
       {/* <div className="container-fluid overflow-auto  d-flex ">
 

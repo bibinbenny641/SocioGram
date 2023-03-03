@@ -1,11 +1,10 @@
 import React, { useContext, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-// import AuthContext from '../../context/AuthContext';
 import { useNavigate} from 'react-router-dom'
 import AuthContext from '../../context/AuthContext'
 import "./addpost.css"
-import { ToastContainer,toast } from "react-toastify";
+import {toast } from "react-toastify";
 
 function AddPosts({newpost,setNewpost}) {
   const generateError = (err) => 

@@ -3,7 +3,6 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.permissions import AllowAny, IsAdminUser
 from rest_framework_simplejwt.authentication import JWTAuthentication
-
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from adminSide.models import User
@@ -34,7 +33,8 @@ def getRoute(request):
         '/api/token',
         '/api/token/refresh',
         'users',
-        'block'
+        'block',
+        '/'
         
     ]
     return Response(routes)
@@ -81,12 +81,9 @@ def registerUser(request):
 @permission_classes([IsAdminUser])
 @authentication_classes([JWTAuthentication])
 def getUser(request):
-    u = User.objects.filter()
-    print("uuuuuuuuuuuuuuuuuuu")
-    print(u)
+    print('dddddddddddd          ddddddddddddddddddddddddddddd')
+    u = User.objects.filter().order_by('id')
     serializer = UserSerializer(u, many=True)
-    print("nnnnnnnnnnnnnnnn")
-    print(serializer)
     return Response({"data":serializer.data})
 
 
@@ -96,8 +93,6 @@ def getUser(request):
 @authentication_classes([JWTAuthentication])
 def BlockUser(request,id):
     user = User.objects.get(id=id)
-    print(user.active)
-    print("bibbibibibibibibibibi")
     if user.active==True:
         user.active = False
     else:
@@ -107,7 +102,8 @@ def BlockUser(request,id):
     return Response({"data":serializer.data})
 
 @api_view(['GET'])
-def profile(reques,id):
+@authentication_classes([JWTAuthentication])
+def profile(request,id):
     print('profile function clicked')
     user = User.objects.get(id=id)
     serializer = UserSerializer(user, many=False)
@@ -115,6 +111,7 @@ def profile(reques,id):
 
 
 @api_view(['PUT'])
+@authentication_classes([JWTAuthentication])
 def Editpro(request,id):
     user = User.objects.get(id=id)
     data = request.data
@@ -127,3 +124,4 @@ def Editpro(request,id):
     user.save()
     serializer = UserSerializer(user, many=False)
     return Response(serializer.data)
+

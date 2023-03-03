@@ -165,11 +165,13 @@ body{
   box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
   border-radius: 20px;
   background-color: rgb(255, 255, 255);
-  width: 90vh;
+  width: 80vh;
   color: #000;
 }
 .theme-light .post .container {
   padding: 20px;
+  margin-bottom: 20px;
+  /* width: 50vh; */
 }
 .theme-light .post .container .user {
   display: flex;
@@ -275,4 +277,13 @@ body{
   gap: 10px;
   cursor: pointer;
   font-size: 14px;
-}/*# sourceMappingURL=post.css.map */
+}
+
+.main{
+	position: relative;
+  border-radius: 10px;
+  padding-bottom: 10vh;
+  bottom: 5vh;
+  top: 5vh;
+  box-shadow: 3px 3px 5px 6px #ccc;
+}
