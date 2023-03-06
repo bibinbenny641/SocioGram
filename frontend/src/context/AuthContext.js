@@ -22,6 +22,9 @@ export const AuthProvider = ({children}) =>{
     // let [currentuser,setCurrentuser] = useState({ authTokens: authTokens ? user.user_id :null } )
     let [auth_user,setAuth_user] = useState(user?.user_id)
     const [ modal,setModal] =useState(false)
+    const [messageDetail,setMessageDetail] = useState()
+    const [roomid, setRoomid] = useState([]);
+
     let navigate = useNavigate()
 
     let loginUser = async(e)=>{
@@ -106,6 +109,14 @@ export const AuthProvider = ({children}) =>{
         navigate("admin/",{replace:true})
     }
 
+    let MessageDetails = (chat) =>{
+        console.log(chat,'inside authcontext')
+        setMessageDetail(chat)
+        console.log(messageDetail,'zzzzzzzzzzzzzzzz')
+    }
+
+    {console.log('kkkkk',messageDetail)}
+
     
     let contextData = {
         user:user,
@@ -116,6 +127,11 @@ export const AuthProvider = ({children}) =>{
         logoutAdmin:logoutAdmin,
         currentuser:currentuser,
         setCurrentuser:setCurrentuser,
+        MessageDetails:MessageDetails,
+        messageDetail:messageDetail,
+        setMessageDetail:setMessageDetail,
+        roomid:roomid,
+        setRoomid:setRoomid,
         
 
     }

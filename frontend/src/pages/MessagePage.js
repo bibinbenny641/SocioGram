@@ -8,15 +8,19 @@ import Message from '../components/messages/Message';
 import { Row, Col } from 'react-bootstrap'
 import Rightsidebar from '../components/Rightcontainer/rightsidebar/Rightsidebar';
 import AddPosts from '../components/models/AddPosts';
+import LeftMenu from '../components/chatComponents/LeftMenu';
+import ChatDetail from '../components/chatComponents/ChatDetail';
+import AuthContext from '../context/AuthContext';
 
 
 function MessagePage() {
-
+  let {messageDetail,roomid} = useContext(AuthContext)
+ 
   return (
     <>
     <div className="theme-light">
 
-<Row>
+  <Row>
     <div style={{position:'sticky'}}>
 
     <Topbar />
@@ -26,28 +30,26 @@ function MessagePage() {
 <Row>
 <div style={{display:'flex'}}>
     <SideBar/>
-    {/* <div >
-      <Message/>
-    </div> */}
     <div className='position: sticky;'>
 
-
-    <div className="overflow-hidden overscroll-none">
+    <div className="overflow-hidden overscroll-none" >
           {/* 2 components cointainer */}
-          <div className="flex justify-start whatsapp-bp:justify-center items-center bg-[#111a21] h-screen">
+          <div className="flex justify-start whatsapp-bp:justify-center items-center bg-[#111a21] h-screen" style={{height:'100%'}}>
             {/* LeftMenu */}
             <div className="bg-[#111a21] min-w-[340px] max-w-[500px] w-100 h-100">
-              <AddPosts/>
+              <LeftMenu/>
             </div>
 
             {/* ChatDetail */}
-            <div className="bg-[#222f35] min-w-[415px] max-w-[1120px] w-100 h-100">
-              {/* <ChatDetail /> */}
+            <div className="bg-[#222f35] min-w-[655px] max-w-[1120px] w-100 h-100">
+              {messageDetail?
+              <ChatDetail />:
+              <p>no data</p>}
             </div>
           </div>
         </div>
     </div>
-    <Rightsidebar/>
+    {/* <Rightsidebar/> */}
 </div> 
 </Row>
 </div>

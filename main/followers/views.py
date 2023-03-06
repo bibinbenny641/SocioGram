@@ -4,7 +4,7 @@ from .models import FollowList,Posts,Like
 from .serializers import FollowlistSerializer,PostSerializer
 from adminSide.serializers import UserSerializer,UserdemoSerializer
 from django.http import Http404
-from rest_framework.views import APIView
+
 from rest_framework.response import Response
 from rest_framework import status
 from adminSide.models import User
@@ -138,7 +138,7 @@ def getcomments(request,id):
 @authentication_classes([JWTAuthentication])
 def suggestion(request,pk):
     print(pk)
-    user = User.objects.all()
+    user = User.objects.all().exclude(id=pk)
     followers = FollowList.objects.filter(seconduser = pk)
     s_user = []
     

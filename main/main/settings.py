@@ -17,6 +17,7 @@ AUTH_USER_MODEL = 'adminSide.User'
 
 
 INSTALLED_APPS = [
+    "daphne",
     'channels',
     'chat',
     'django.contrib.admin',
@@ -36,6 +37,13 @@ INSTALLED_APPS = [
 ]
 
 ASGI_APPLICATION = 'main.asgi.application'
+WSGI_APPLICATION = 'main.wsgi.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': "channels.layers.InMemoryChannelLayer"
+        }
+    }
 
 
 REST_FRAMEWORK = {
@@ -111,7 +119,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'main.wsgi.application'
+
 
 
 
