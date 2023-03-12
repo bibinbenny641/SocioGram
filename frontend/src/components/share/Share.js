@@ -13,8 +13,7 @@ const Share = () => {
     })
 
   let user = useContext(AuthContext)
-  console.log(user)
-  console.log(user.user.user_id,'ddddd')
+
   let u = user.user.user_id
   let navigate = useNavigate()
   let [authTokens, setAuthTokens] = useState(() => localStorage.getItem('authTokens') ? localStorage.getItem('authTokens') : null)
@@ -27,26 +26,27 @@ const Share = () => {
     const formData = new FormData();
     formData.append('image', file)
     formData.append('caption', caption)
-    console.log(caption)
+
     if (caption === '') {
       toast.error(`Cannot add an empty post`,{theme:"dark"},{position:'top-right'})
     } else {
 
-      let response = await fetch(`http://127.0.0.1:8000/follow/addposts/`, {
+      let response = await fetch(`http://127.0.0.1:8000/follow/addposts/${u}`, {
         method: 'POST',
         body: formData,
         headers: {
-          'Content-Type': 'application/json',
+          // 'Content-Type':'multipart/form-data',
           Authorization: `Bearer  ${String(JSON.parse(authTokens).access)}`
         },
 
 
       })
       let data = await response.json()
-
-      console.log("success ")
-
-      if (response.status === 400) {
+      if (response.status === 200){
+        console.log(data)
+        toast.success('successfully added post')
+      }
+      else if(response.status === 400) {
         generateError("an error occured")
         navigate('/')
       } else {

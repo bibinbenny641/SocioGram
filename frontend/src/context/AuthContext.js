@@ -115,7 +115,7 @@ export const AuthProvider = ({children}) =>{
         console.log(messageDetail,'zzzzzzzzzzzzzzzz')
     }
 
-    {console.log('kkkkk',messageDetail)}
+    
 
     
     let contextData = {

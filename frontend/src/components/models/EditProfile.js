@@ -1,16 +1,56 @@
 import React, { useContext, useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
+// import Button from 'react-bootstrap/Button';
+import { Button, ButtonGroup } from '@chakra-ui/react'
+// import Modal from 'react-bootstrap/Modal';
+import { MdBuild } from 'react-icons/md';
 import { Link, useNavigate } from 'react-router-dom'
 import AuthContext from '../../context/AuthContext';
 // import './addpost.css'
+import { useDisclosure } from '@chakra-ui/react'
+import { Text } from '@chakra-ui/react'
+import { Input,FormLabel,FormControl } from '@chakra-ui/react'
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+} from '@chakra-ui/react'
 
-function EditProfile({refresh,setRefresh}) {
+function EditProfile({refresh,setRefresh,userdata}) {
   let {user} = useContext(AuthContext)
+
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const navigate = useNavigate()
+
+
+  const OverlayOne = () => (
+    <ModalOverlay
+      bg='blackAlpha.300'
+      backdropFilter='blur(10px) hue-rotate(90deg)'
+    />
+  )
+
+  const OverlayTwo = () => (
+    <ModalOverlay
+      bg='none'
+      backdropFilter='auto'
+      backdropInvert='80%'
+      backdropBlur='2px'
+    />
+  )
+
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const [overlay, setOverlay] = React.useState(<OverlayOne />)
+
+
+
+
+
   
 
   let editPro = async(e)=>{
@@ -36,18 +76,19 @@ function EditProfile({refresh,setRefresh}) {
         navigate('/')
     } else{
         // alert("all set")
-        navigate('/myprofile')
+        // navigate('/myprofile')
         setRefresh(true)
     }
 }
   
   return (
     <>
-    <center>
+    {/* <center>
 
-      <Button style={{color:'green'}} className='addpostbutton' variant="danger" onClick={handleShow}>
-         Edit Profile
-      </Button>
+      
+      <Button onClick={handleShow} leftIcon={<MdBuild />} colorScheme='blue' variant='solid'>
+    Edit Profile
+  </Button>
     </center>
 
       <Modal show={show} onHide={handleClose}>
@@ -78,11 +119,65 @@ function EditProfile({refresh,setRefresh}) {
           <Button variant="primary" onClick={handleClose}>
             Close
           </Button>
-          {/* <Button variant="primary" >
-            Save Changes
-          </Button> */}
+         
         </Modal.Footer>
+      </Modal> */}
+
+
+
+
+
+
+      <Button 
+        leftIcon={<MdBuild />}
+        ml='4'
+        colorScheme='blue' variant='solid'
+        onClick={() => {
+          setOverlay(<OverlayTwo />)
+          onOpen()
+        }}
+      >
+        Edit Profile
+      </Button>
+      <Modal isCentered isOpen={isOpen} onClose={onClose}>
+        {overlay}
+        <ModalContent>
+          <ModalHeader>Edit</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <form onSubmit={editPro}>
+            <div className='login_input'>
+                <FormLabel htmlFor="email">Full Name</FormLabel>
+                <Input type="text" name='fullname' placeholder={userdata.fullname}
+                />
+            </div>
+            <FormControl>
+                <FormLabel htmlFor="email">Nickname</FormLabel>
+                <Input type="text" name='username' placeholder={userdata.user_name}
+                />
+            </FormControl>
+            
+            <center>
+
+            <Button colorScheme='blue' variant='outline'  onClick={onClose} >Save</Button>
+            </center>
+            
+        </form>
+
+
+          </ModalBody>
+          <ModalFooter>
+            <Button onClick={onClose}>Close</Button>
+          </ModalFooter>
+        </ModalContent>
       </Modal>
+
+
+
+
+
+
+
     </>
   );
 }

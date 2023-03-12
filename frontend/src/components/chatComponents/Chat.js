@@ -19,7 +19,7 @@ function Chat({ chat }) {
       />
       
         {/* Contact name and message */}
-        <div className="flex flex-col justify-between text-white">
+        <div className="flex flex-col justify-between text-dark">
           {/* Contact name */}
           <h1 className="font-medium mb-1">{chat.secondUname}</h1>
 

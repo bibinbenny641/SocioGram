@@ -2,10 +2,15 @@
 import {  useEffect, useState ,useContext} from "react";
 import "./comments.css";
 import AuthContext from "../../context/AuthContext";
+import {toast } from "react-toastify";
+import { useNavigate} from 'react-router-dom'
 
 
 const Comments = ({foll}) => {
   let {user} = useContext(AuthContext)
+  console.log(user,'jsjsjsj')
+  let navigate = useNavigate()
+  let [authTokens, setAuthTokens] = useState(() => localStorage.getItem('authTokens') ? localStorage.getItem('authTokens') : null)
   console.log(foll.id,'inside comments component')
   //Temporary
   // const comments = [
@@ -26,7 +31,7 @@ const Comments = ({foll}) => {
   //       "",
   //   },
   // ];
-  const [values,setValues] = useState({inputComment:''})
+  const [values,setValues] = useState('')
   console.log(values,'state values are herer ererererere')
   let hangleChange = (e)=>{
     setValues(
@@ -40,40 +45,54 @@ const Comments = ({foll}) => {
   console.log(values,'state values')
 
 
-  let addcomment = async(e) =>{
-    e.preventDefault()
-    let data = values
-    console.log(data)
-    
-    
-    console.log('adding comment');
-    let response = await fetch(`http://127.0.0.8000/follow/addcomments/${user.user_id}/`)
-  }
-
-
-  let comm = async ()=>{
-    console.log('comm function');
-
-
-    let response = await fetch(`http://127.0.0.1:8000/follow/getcomments/${foll.id}/`, {
-      method: 'GET',
+  let addcomment = async () => {
+    let response = await fetch(`http://127.0.0.1:8000/follow/addcomments/${user.user_id}/`, {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer  ${String(JSON.parse(authTokens).access)}`
       },
+      body:JSON.stringify({values})
 
     })
     let data = await response.json()
 
     if (response.status === 200) {
-      console.log(data)
+      
+      alert('success')
+
 
     } else {
-      alert("Something went wrong!!")
+      // logoutUser()
+      alert('failed')
 
     }
   }
+
+
+  // let comm = async ()=>{
+  //   console.log('comm function');
+
+
+  //   let response = await fetch(`http://127.0.0.1:8000/follow/getcomments/${foll.id}/`, {
+  //     method: 'GET',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+
+  //   })
+  //   let data = await response.json()
+
+  //   if (response.status === 200) {
+  //     console.log(data)
+
+  //   } else {
+  //     alert("Something went wrong!!")
+
+  //   }
+  // }
   useEffect(() => {
-    comm()
+    // comm()
   }, [],)
   return (
     <div className="comments container">

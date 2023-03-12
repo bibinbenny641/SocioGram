@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
-// import Message from "./Message";
 // import RoundedBtn from "./Common/RoundedBtn";
 // import { messagesData } from "../data/whatsapp";
 import { MdSearch, MdSend } from "react-icons/md";
@@ -10,16 +9,13 @@ import { BsFillMicFill } from "react-icons/bs";
 import RoundedBtn from "../common/RoundedBtn";
 import AuthContext from "../../context/AuthContext";
 import Message from "./Message";
-// import { cs1, cs2 } from "../assets/whatsapp";
-// import { getTime } from "../logic/whatsapp";
-
 function ChatDetail() {
   let [authTokens, setAuthTokens] = useState(() => localStorage.getItem('authTokens') ? localStorage.getItem('authTokens') : null)
   let { messageDetail,roomid,user } = React.useContext(AuthContext)
   const [messages,setMessages] = useState([])
   const[message,setMessage] = useState([])
   const [isTrue,setIsTrue] = useState(false)
-  console.log('message',messageDetail,roomid)
+  console.log('message',messages)
   const socketRef = useRef(null);
   let room = roomid.id
   const bottomRef = useRef(null);
@@ -58,7 +54,7 @@ function ChatDetail() {
   }, [messages,room]);
     useEffect(() => {
     get_messages()
-  }, [room]); 
+  }, [room,isTrue]); 
   console.log(messages,'aaaaaaaaaaaaaaaaaaaa')
 
   //   const [messages, setMessages] = useState(messagesData);
@@ -67,33 +63,11 @@ function ChatDetail() {
   //   const inputRef = useRef(null);
   //   const bottomRef = useRef(null);
 
-  //   // Functions
-
-  //   const addMessage = (msg) => {
-  //     const newMessages = [...messages, msg];
-  //     setMessages(newMessages);
-  //   };
-
-  //   const handleEmojiClick = () => {
-  //     inputRef.current.value += "🔥";
-  //     inputRef.current.focus();
-  //   };
-
-  //   const handleImgUpload = () => {
-  //     addMessage({
-  //       img: cs2,
-  //       time: getTime(),
-  //       sent: true,
-  //     });
-  //   };
-
-  //   const handleInputChange = () => {
-  //     inputRef.current.value.length === 0 ? setTyping(false) : setTyping(true);
-  //   };
 
     const handleInputSubmit = () => {
       socketRef.current.send(message);
       setMessage('');
+      get_messages()
     };
 
     useEffect(() => {
@@ -102,19 +76,12 @@ function ChatDetail() {
       });
     }, [messages]);
 
-  //   useEffect(() => {
-  //     const listener = (e) => {
-  //       if (e.code === "Enter") handleInputSubmit();
-  //     };
 
-  //     document.addEventListener("keydown", listener);
-  //     return () => document.removeEventListener("keydown", listener);
-  //   });
 
   return (
     
-    <div className="flex flex-col h-screen">
-      <div className="flex justify-between bg-[#202d33] h-[60px] p-3">
+    <div className="flex flex-col h-screen" style={{height:'90vh'}}>
+      <div className="flex justify-between bg-[#f8fafc] h-[60px] p-3">
         <div className="flex items-center">
           <img
             src="https://www.nicepng.com/png/detail/160-1608012_mascot-animate-cartoon-character-vector-png.png"
@@ -123,7 +90,7 @@ function ChatDetail() {
           />
 
           <div className="flex flex-col">
-            <h1 className="text-white font-medium">{messageDetail ? messageDetail.secondUname:'haiii'}</h1>
+            <h1 className="text-dark font-medium">{messageDetail ? messageDetail.secondUname:'haiii'}</h1>
 
             {/* Status */}
             {/* <p className="text-[#8796a1] text-xs">online</p> */}
@@ -140,20 +107,36 @@ function ChatDetail() {
 
       {/* Messages section */}
       <div
-        className="bg-[#0a131a]  bg-contain overflow-y-scroll h-100"
+        className="bg-[#f8fafc]  bg-contain overflow-y-scroll h-100"
         style={{ padding: "12px 7%" }}
       >
-        {messages.map((msg) => (
+        
+        {messages.map((msg) => {
+          // if(msg.sender ===user.user_id){
+          //   console.log('true its current user')
           
+          return(
           <Message
             msg={msg.message}
-            // time={msg.time}
-            // isLink={msg.isLink}
+            time={msg.timestamp}
+            sender={msg.sender}
             // img={msg.img}
             sent={msg.sent}
           />
-        ))}
-        {/* <div ref={bottomRef} /> */}
+        )
+      // }else{return(
+      //     <Message
+      //       msg={msg.message}
+      //       time={msg.timestamp}
+      //       sender={msg.sender}
+      //       // img={msg.img}
+      //       sent={msg.sent}
+      //     />
+          
+      //   )
+      //     }
+})}
+        <div ref={bottomRef} />
       </div>
 
       {/* Bottom section */}

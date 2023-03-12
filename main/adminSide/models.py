@@ -32,7 +32,7 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser):
-    # id = models.BigIntegerField(auto_created=True, unique=True)
+    # id = models.BigIntegerField(auto_created=True, unique=True,primary_key=True)
     fullname = models.CharField(max_length=200,blank=True,null=True)
     phoneno = models.CharField(max_length=10,null=True,unique=True)
     email =models.EmailField(max_length=100,unique=True)
@@ -48,8 +48,8 @@ class User(AbstractBaseUser):
 
     objects = UserManager()
 
-    def __str__(self):
-        return self.email
+    # def __str__(self):
+    #     return self
 
     def get_full_name(self):
         return self.email

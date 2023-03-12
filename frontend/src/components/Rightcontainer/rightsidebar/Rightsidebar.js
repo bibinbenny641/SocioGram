@@ -12,11 +12,9 @@ const Rightsidebar = () => {
   let { user } = useContext(AuthContext)
   let [authTokens, setAuthTokens] = useState(() => localStorage.getItem('authTokens') ? localStorage.getItem('authTokens') : null)
   let [suggesteduser, setSuggesteduser] = useState([])
-
+ 
 
   let followSuggestion = async () => {
-    console.log(suggesteduser)
-
 
     let response = await fetch(`http://127.0.0.1:8000/follow/suggestion/${user.user_id}/`, {
       method: 'GET',
@@ -29,7 +27,6 @@ const Rightsidebar = () => {
     let data = await response.json()
 
     if (response.status === 201) {
-      console.log(data)
       setSuggesteduser(data)
 
 
@@ -38,6 +35,30 @@ const Rightsidebar = () => {
 
     }
   }
+  let followuser = async (id) => {
+    console.log(id,'followuser function')
+    let response = await fetch(`http://127.0.0.1:8000/follow/follow_a_user/${user.user_id}/${id}/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer  ${String(JSON.parse(authTokens).access)}`
+      },
+
+    })
+    let data = await response.json()
+
+    if (response.status === 200) {
+      
+      alert('success')
+
+
+    } else {
+      // logoutUser()
+      alert('failed')
+
+    }
+  }
+
   
   useEffect(() => {
     followSuggestion()
@@ -66,7 +87,7 @@ const Rightsidebar = () => {
                 </div>
               {/* </Link> */}
                 <div className="buttons">
-                  <button style={{background:"blue"}}>follow</button>
+                  <button onClick={() => { followuser(i.id) }} style={{background:"blue"}}>follow</button>
                 </div>
 
               </div>

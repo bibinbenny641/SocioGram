@@ -56,11 +56,11 @@
     align-items: center;
     gap: 20px;
   }
-  @media (max-width: 480px) {
+  /* @media (max-width: 480px) {
     .theme-light .navbar .right {
       display: none;
     }
-  }
+  } */
   .theme-light .navbar .right .user {
     display: flex;
     align-items: center;
@@ -154,4 +154,10 @@
     border-radius: 50%;
     -o-object-fit: cover;
        object-fit: cover;
+  }
+  .logouticon{
+    height: 30px;
+    width: 30px;
+    color: red;
+    margin-right: 0px;
   }

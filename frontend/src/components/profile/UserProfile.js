@@ -4,6 +4,7 @@ import AuthContext from '../../context/AuthContext';
 import './userprofile.css'
 import { useState, useEffect } from "react";
 import EditProfile from "../models/EditProfile";
+import Post from '../../components/posts/Post'
 import { Navigate, useNavigate, Link } from "react-router-dom";
 import AddPosts from "../models/AddPosts";
 import View_followers from "./Viewfollowers";
@@ -33,10 +34,24 @@ import {
   useColorModeValue,
   Tab, TabList, TabPanel, TabPanels, Tabs,
 } from '@chakra-ui/react';
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+} from '@chakra-ui/react'
+import { useDisclosure } from '@chakra-ui/react'
+
 import { useParams } from "react-router-dom";
+import InnerPost from "../posts/InnerPost";
+import Comments from "../comments/Comments";
 
 
 function UserProfile() {
+  
   let [authTokens, setAuthTokens] = useState(() => localStorage.getItem('authTokens') ? localStorage.getItem('authTokens') : null)
   let { user, auth_user, currentuser, setCurrentuser } = useContext(AuthContext)
   let {logoutUser} = useContext(AuthContext)
@@ -52,7 +67,7 @@ function UserProfile() {
   const [usersfollowing, setUsersfollowing] = useState(false)
 
   const { usersid } = useParams();
-  console.log(usersid,user.user_id,'jajaj')
+  const [loading, setLoading] = useState(true)
   
   const follvr = function () {
     setUsersfollower(true)
@@ -77,7 +92,8 @@ function UserProfile() {
       
 
     } else {
-      alert("KITTY ")
+      logoutUser()
+      
     }
 
   }
@@ -132,7 +148,6 @@ function UserProfile() {
   }
 
 
-  
 
   // let follow_function = async (id) => {
   //   console.log("following function clicked")
@@ -156,28 +171,37 @@ function UserProfile() {
 
   //   }
   // }
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const [size, setSize] = React.useState('md')
+  const sizes = ['xs', 'sm', 'md', 'lg', 'xl', 'full']
+
+  const handleSizeClick = (newSize) => {
+    setSize(newSize)
+    onOpen()
+  }
 
 
 
   useEffect(() => {
     userlist(usersid)
     folow(usersid)
-    // usersPosts()
+    usersPosts()
   }, [])
 
   useEffect(() => {
-    // setViewfollowers(false)
+    setViewfollower(false)
     setRefresh(false)
     setNewpost(false)
     userlist(usersid)
   }, [refresh])
+  console.log(post,'kdkdkdkdk')
 
   return (
 
     <>
       <Center py={6}>
         <Box
-          maxW={'550px'}
+          maxW={'850px'}
           w={'full'}
           bg={useColorModeValue('white', 'gray.900')}
           boxShadow={'2xl'}
@@ -267,7 +291,7 @@ function UserProfile() {
 
               <span><strong>{following}</strong></span>
             </Badge>
-            <Badge onClick={() => (follving())} px={4}
+            <Badge  px={4}
               py={1}
               bg={useColorModeValue('gray.50', 'gray.800')}
               fontWeight={'400'}
@@ -275,7 +299,7 @@ function UserProfile() {
               Posts
               <br></br>
 
-              <span><strong>6</strong></span>
+              <span><strong>{post.length}</strong></span>
             </Badge>
 
           </Stack>
@@ -283,20 +307,34 @@ function UserProfile() {
           <Stack mt={8} direction={'row'} spacing={4}>
           
           {usersid == user.user_id?
-          <EditProfile setRefresh={setRefresh} />
+          <Center>
+            
+            <EditProfile setRefresh={setRefresh} userdata={userdata} />
+          </Center>
           
-          // <Button
-          //   flex={1}
-          //   fontSize={'sm'}
-          //   rounded={'full'}
-          //   _focus={{
-          //     bg: 'gray.500',
-          //   }}>
-              
-          //   Edit
-          // </Button>
-
            : 
+           (usersid!=setViewfollower.seconduser)?
+           <div>
+             <Button
+            flex={1}
+            fontSize={'sm'}
+            rounded={'full'}
+            bg={'blue.400'}
+            color={'white'}
+            boxShadow={
+              '0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)'
+            }
+            _hover={{
+              bg: 'blue.500',
+            }}
+            _focus={{
+              bg: 'blue.500',
+            }}>
+            UnFollow
+          </Button>
+           </div>:
+           
+           
           <Button
             flex={1}
             fontSize={'sm'}
@@ -354,17 +392,19 @@ function UserProfile() {
             </Tabs> :
             null
           }
+          {
+        post.map((foll, i) => (
+          <div key={i}>
+            <InnerPost foll={foll} Comments={Comments} usersPosts={usersPosts} />
+          </div>
 
+        ))
+      }
+         
         </Box>
       </Center>
 
-
-
-
-
-
-      
-
+    
       {/* <div className="container-fluid overflow-auto  d-flex ">
 
         <div style={{ marginTop: "20px", marginLeft: "10px", boxShadow: "3px 3px 5px 6px #ccc", width: "80vh", height: "85vh" }} className=" overflow-auto container">
@@ -465,11 +505,7 @@ function UserProfile() {
           </div>
         </div>
       </div> */}
-
-
-
-
-
+      
 
 
     </>

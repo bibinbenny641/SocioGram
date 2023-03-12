@@ -46,19 +46,21 @@ class followlist_class(APIView):
 @api_view(['POST'])
 @authentication_classes([JWTAuthentication])
 @permission_classes([IsAuthenticated])
-def addposts(request):
-    print(request.user)
+def addposts(request,id):
+    print(request.user.id)
+    userid = User.objects.get(id = id)
+    print(id,'hhh')
     data = request.data
     print(data)
     caption = data['caption']
     post = data['image']
     print(caption)
     print(post)
-    p =Posts(postImage=post,postCaptioin=caption)
+    p =Posts(postImage=post,postCaptioin=caption,user = userid)
     p.save()
-    
-    return Response(status=status.HTTP_200_OK)
-    
+    dat = {'success':'okay'}
+    return Response(dat,status=status.HTTP_200_OK)
+                                                                                                                                    
 
 
 # ..................all posts fetched from here......................
@@ -127,6 +129,15 @@ def isliked(request,id):
 
     print('success  ')
     return Response({'results':data})
+
+@api_view(['POST'])
+def addcomments(request,id):
+    print(id,'add comments inside comments f')
+    data = request.data
+    print(data)
+    ss = {'hai':'hh'}
+    return Response(ss,status=status.HTTP_200_OK)
+
 @api_view(['GET'])
 def getcomments(request,id):
     print("working")
@@ -137,13 +148,12 @@ def getcomments(request,id):
 @api_view(['GET'])
 @authentication_classes([JWTAuthentication])
 def suggestion(request,pk):
+    print('inside the suggestion')
     print(pk)
     user = User.objects.all().exclude(id=pk)
-    followers = FollowList.objects.filter(seconduser = pk)
-    s_user = []
-    
-    
-    results = UserdemoSerializer(user,many=True)
+    foll = User.objects.filter(followedByr__isnull=True)
+
+    results = UserdemoSerializer(foll,many=True)
     if results.is_valid:
         return Response(results.data,status=status.HTTP_201_CREATED)
     else:
@@ -175,6 +185,19 @@ def deletePostAdmin(request,id):
     post.delete()
     return Response(status=status.HTTP_200_OK)
 
+@api_view(['POST'])
+@permission_classes([IsAdminUser])
+@authentication_classes([JWTAuthentication])
+def follow_a_user(request,id1,id2):
+    print(id1,id2)
+    id = int(id2)
+    print(id)
+    second = User.objects.values_list('id',flat=True).get(id=id2)
+    secons_user = User.objects.get(pk = id2)
+    print(secons_user)
+    # follow = FollowList.objects.create(firstuser = id1,seconduser = id)
+    data = {'hai':'success'}
+    return Response(data,status=status.HTTP_200_OK)
 
 
 

@@ -8,8 +8,7 @@ import Chat from "./Chat";
 function Chats() {
   const [members, setMembers] = useState([]);
   // const [roomid, setRoomid] = useState([]);
-  console.log(members)
-  // console.log(roomid,'room')
+
   let [authTokens, setAuthTokens] = useState(() => localStorage.getItem('authTokens') ? localStorage.getItem('authTokens') : null)
   let { user } = useContext(AuthContext)
   let {logoutUser} = useContext(AuthContext)
@@ -37,11 +36,10 @@ function Chats() {
 
   }
   function handleClick(id){
-    console.log(id)
+   
     createroom(id)
   }
   let createroom = async (usersid) => {
-    console.log(usersid,'inside room creation')
 
     let response = await fetch(`http://127.0.0.1:8000/chat/create_or_find_room/${user.user_id}/${usersid}`, {
       method: 'GET',
@@ -56,7 +54,6 @@ function Chats() {
     let data = await response.json()
 
     if (response.status === 200) {
-      console.log(data,'hhdhdhdhd')
       setRoomid(data)
 
 

@@ -6,12 +6,17 @@ import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+import LogoutIcon from '@mui/icons-material/Logout';
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import AuthContext from "../../context/AuthContext";
+import Menus from "../menu/Menus";
+import { PhoneIcon, AddIcon, WarningIcon } from '@chakra-ui/icons'
+// import { Menu } from "@mui/material";
 
 const Topbar = () => {
   let {user} = useContext(AuthContext)
+  let {logoutUser} = useContext(AuthContext)
 
   return (
     <div className="navbar">
@@ -21,25 +26,36 @@ const Topbar = () => {
         </Link>
         <HomeIcon />
         
-        <GridViewOutlinedIcon />
+        {/* <GridViewOutlinedIcon > */}
+          <Menus/>
+          {/* </GridViewOutlinedIcon> */}
         <div className="search">
           <SearchOutlinedIcon />
           <input type="text" placeholder="Search..." />
         </div>
+        
+
       </div>
+      {/* <div className="logouticon">
+          <WarningIcon />
+          
+        </div> */}
       <div className="right">
         <Link to={`/profile/${user.user_id}`}>
         <PersonOutlinedIcon />
         </Link>
+        <Link to={'/message'}>
         <EmailOutlinedIcon />
+        </Link>
+        <Link>
         <NotificationsOutlinedIcon />
-        <div className="user">
-          <img style={{height:'30px'}}
-            src="https://cdn-icons-png.flaticon.com/512/21/21104.png"
-            alt=""
-          />
-          <span>kk</span>
-        </div>
+
+        </Link>
+        <button onClick={logoutUser}>
+        <LogoutIcon />
+        <span>{user.fullname}</span>
+        </button>
+        
       </div>
     </div>
   );

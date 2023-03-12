@@ -25,6 +25,7 @@ export default function Post({ setLoading }) {
 
   let [authTokens, setAuthTokens] = useState(() => localStorage.getItem('authTokens') ? localStorage.getItem('authTokens') : null)
   
+ 
   let postGet = async () => {
 
     let response = await fetch(`http://127.0.0.1:8000/follow/getposts/${user.user_id}/`, {

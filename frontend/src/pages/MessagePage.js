@@ -34,17 +34,17 @@ function MessagePage() {
 
     <div className="overflow-hidden overscroll-none" >
           {/* 2 components cointainer */}
-          <div className="flex justify-start whatsapp-bp:justify-center items-center bg-[#111a21] h-screen" style={{height:'100%'}}>
+          <div className="flex justify-start  items-center  h-screen" style={{height:'100%'}}>
             {/* LeftMenu */}
-            <div className="bg-[#111a21] min-w-[340px] max-w-[500px] w-100 h-100">
+            <div className="bg-[#f1f5f9] min-w-[340px] max-w-[500px] w-100 h-100">
               <LeftMenu/>
             </div>
 
             {/* ChatDetail */}
-            <div className="bg-[#222f35] min-w-[655px] max-w-[1120px] w-100 h-100">
+            <div className="bg-[#f1f5f9] min-w-[655px] max-w-[1120px] w-100 h-100">
               {messageDetail?
               <ChatDetail />:
-              <p>no data</p>}
+              null}
             </div>
           </div>
         </div>

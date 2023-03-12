@@ -38,10 +38,10 @@ function SideBar() {
             <span>My Profile</span>
             </Link>
           </div>
-          <div className="item">
+          {/* <div className="item">
             <img src='https://cdn-icons-png.flaticon.com/512/21/21104.png' alt="" />
             <span>Watch</span>
-          </div>
+          </div> */}
           <div className="item">
             <img src='' alt="" />
             <span onClick={logoutUser}>LogOut</span>

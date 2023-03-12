@@ -14,11 +14,10 @@ export default function InnerPost({ foll, Comments, postGet }) {
     let { user } = useContext(AuthContext)
 
     const openComment = (id) => {
-        console.log(id, 'post id is herer')
         setCommentOpen(!commentOpen)
     }
     const userProfile = (id) => {
-        console.log(id, 'id in userprofile function')
+        
         navigate(`/profile/${id}`)
 
     }

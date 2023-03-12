@@ -28,7 +28,7 @@ class Posts(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,related_name="posts")
     username = models.CharField(max_length=255,null=True)
     date = models.TimeField(auto_now_add=True)
-    time = models.DateTimeField(blank=datetime.now())
+    time = models.DateTimeField(auto_now_add=True)
     visibility = models.BooleanField(default=True)
     likeCount = models.IntegerField(blank=True,null=True)
 
