@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
-from .models import FollowList,Posts,Like
-from .serializers import FollowlistSerializer,PostSerializer
+from .models import FollowList,Posts,Like,Comments
+from .serializers import FollowlistSerializer,PostSerializer,CommentSerializer
 from adminSide.serializers import UserSerializer,UserdemoSerializer
 from django.http import Http404
 
@@ -131,19 +131,27 @@ def isliked(request,id):
     return Response({'results':data})
 
 @api_view(['POST'])
-def addcomments(request,id):
+def addcomments(request,id,id2):
     print(id,'add comments inside comments f')
+    print(id2)
     data = request.data
-    print(data)
+    c=data['values']
+    print(c['comment'])
+    comm = Comments.objects.create(post = Posts.objects.get(id=id2),user = User.objects.get(id=id),comment = c['comment'])
     ss = {'hai':'hh'}
     return Response(ss,status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 def getcomments(request,id):
     print("working")
-    message = "hai"
-    return Response({'data':message})
-
+    comment = Comments.objects.filter(post=id).select_related('user').order_by('-id')
+    print(comment)
+    serializer = CommentSerializer(comment,many=True)
+    if serializer.is_valid:
+        return Response(serializer.data,status=status.HTTP_200_OK)
+    else:
+        return Response(status=status.HTTP_403_FORBIDDEN)
+    
 
 @api_view(['GET'])
 @authentication_classes([JWTAuthentication])

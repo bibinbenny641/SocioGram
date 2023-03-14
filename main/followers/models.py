@@ -40,15 +40,15 @@ def addUsername(sender,instance,**kwargs):
 
 class Like(models.Model):
     islike = models.BooleanField(default=False,blank=True)
-    likedby = models.ForeignKey(User,on_delete=models.CASCADE)
+    likedby = models.ForeignKey(User,on_delete=models.CASCADE) 
     likedPost = models.ForeignKey(Posts,on_delete=models.CASCADE,related_name='liked_post')
 
 
 class Comments(models.Model):
     post = models.ForeignKey(Posts,on_delete=models.CASCADE)
-    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    user = models.ForeignKey(User,on_delete=models.CASCADE,related_name='user_na')
     comment = models.TextField(max_length=255)
-    
+    # time = models.DateTimeField(auto_now_add=True,blank=True)
 
 
 

@@ -21,6 +21,7 @@ export default function Post({ setLoading }) {
   const [viewposts, setViewposts] = useState([])
   let {logoutUser} = useContext(AuthContext)
   let navigate = useNavigate()
+  console.log(viewposts,'postsmmmm')
 
 
   let [authTokens, setAuthTokens] = useState(() => localStorage.getItem('authTokens') ? localStorage.getItem('authTokens') : null)
