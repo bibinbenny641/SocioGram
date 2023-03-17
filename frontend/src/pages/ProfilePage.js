@@ -18,7 +18,7 @@ function ProfilePage() {
         <Row>
           <div style={{ display: 'flex' }}>
             <SideBar />
-            <div style={{  overflow: "scroll",paddingTop:"20px",marginTop:"10px", border:"rounded"}}>
+            <div className='mainhomepage' style={{ position: 'sticky', paddingTop:"20px",marginTop:"10px", border:"rounded"}}>
 
               <UserProfile />
 

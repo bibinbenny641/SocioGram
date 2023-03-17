@@ -12,6 +12,7 @@ import { useContext } from "react";
 import AuthContext from "../../context/AuthContext";
 import Menus from "../menu/Menus";
 import { PhoneIcon, AddIcon, WarningIcon } from '@chakra-ui/icons'
+import Diversity3Icon from '@mui/icons-material/Diversity3';
 // import { Menu } from "@mui/material";
 
 const Topbar = () => {
@@ -46,6 +47,9 @@ const Topbar = () => {
         </Link>
         <Link to={'/message'}>
         <EmailOutlinedIcon />
+        </Link>
+        <Link to={'/people'}>
+        <Diversity3Icon />
         </Link>
         <Link>
         <NotificationsOutlinedIcon />

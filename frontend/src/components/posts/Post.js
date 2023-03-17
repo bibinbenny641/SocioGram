@@ -18,6 +18,7 @@ import { useNavigate} from 'react-router-dom'
 
 export default function Post({ setLoading }) {
   let { user } = useContext(AuthContext)
+  let {added,setAdded} = useContext(AuthContext)
   const [viewposts, setViewposts] = useState([])
   let {logoutUser} = useContext(AuthContext)
   let navigate = useNavigate()
@@ -42,6 +43,7 @@ export default function Post({ setLoading }) {
     if (response.status === 200) {
 
       setLoading(false)
+      setAdded(false)
       setViewposts(data.data)
     } else {
       
@@ -52,7 +54,7 @@ export default function Post({ setLoading }) {
 
   useEffect(() => {
     postGet()
-  }, [],)
+  }, [added],)
 
   return (
     <>
@@ -62,7 +64,7 @@ export default function Post({ setLoading }) {
       {
         viewposts.map((foll, i) => (
           <div key={i}>
-            <InnerPost foll={foll} Comments={Comments} postGet={postGet} />
+            <InnerPost foll={foll} Comments={Comments} postGet={postGet} viewposts={viewposts} />
           </div>
 
         ))

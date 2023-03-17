@@ -1,13 +1,13 @@
 import React, { useContext, useState } from 'react'
-import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
 import AuthContext from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
 import { Divider } from '@chakra-ui/react'
 import { Card, CardHeader, CardBody, CardFooter, Flex, Avatar, Box, Button, Heading, Text, Image, IconButton } from '@chakra-ui/react'
 import moment from 'moment';
 
 
-export default function InnerPost({ foll, Comments, postGet }) {
+export default function InnerPost({ foll, Comments, postGet,viewposts }) {
     const [commentOpen, setCommentOpen] = useState(false);
     const [liked, setLiked] = useState(false)
     const navigate = useNavigate()
@@ -49,61 +49,7 @@ export default function InnerPost({ foll, Comments, postGet }) {
     return (
 
         <>
-            {/* <div className="post">
-                <div className="container">
-                    <div className="user">
-                        <div className="userInfo">
-                            <img style={{ height: "50px", borderRadius: "50px" }} src={`http://127.0.0.1:8000${foll.postImage}`} alt="" />
-                            <div className="details">
-                                <Link
-                                    to={`/profile/${foll.user}`}
-                                    style={{ textDecoration: "none", color: "inherit" }}
-                                >
-                                    <span className="name">{foll.username}</span>
-                                </Link>
-                                <span className="date">1 min ago</span>
-                            </div>
-                        </div>
-                        <MoreHorizIcon />
-                    </div>
-                    {
-                        foll.postImage !== "/media/null"?
-                        <div className="content">
-                        <p>{foll.postCaptioin}</p>
-                        <img style={{ height: '50vh', width: '70vh' }} src={`http://127.0.0.1:8000${foll.postImage}`} alt="" />
-                    </div>
-                    :
-                    <div className="content">
-                        <p>{foll.postCaptioin}</p>
-                    </div>
-                    }
-                    <div className="info">
-                        <div className="item">
-                            <span onClick={() => { likebutton(foll.id) }}>
-
-                                
-                                <FavoriteOutlinedIcon style={{ color: 'red' }} />
-
-                                {foll.liked_post.length}
-
-
-                            </span>
-                            <span>{ }</span>
-                        </div>
-                        <div className="item" onClick={() => openComment(foll.id)}>
-                            <TextsmsOutlinedIcon />
-                            12 Comments
-                        </div>
-                        <div className="item">
-                            <ShareOutlinedIcon />
-                            Share
-                        </div>
-                    </div>
-                    {commentOpen && <Comments foll={foll} />}
-                </div>
-            </div> */}
-
-
+            {foll!==null?console.log('hsi'):console.log('haaaaaaaaaa')}
             <Card maxW='700px' paddingTop={50}>
                 <CardHeader>
                     <Flex spacing='4'>

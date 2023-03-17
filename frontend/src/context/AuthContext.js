@@ -24,6 +24,11 @@ export const AuthProvider = ({children}) =>{
     const [ modal,setModal] =useState(false)
     const [messageDetail,setMessageDetail] = useState()
     const [roomid, setRoomid] = useState([]);
+    const [added,setAdded] = useState(false)
+    const [viewfollowing, setViewfollowing] = useState([])
+    const [viewfollower, setViewfollower] = useState([])
+ 
+
 
     let navigate = useNavigate()
 
@@ -105,12 +110,10 @@ export const AuthProvider = ({children}) =>{
         
         localStorage.removeItem('authTokens')
         
-        console.log("jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj")
         navigate("admin/",{replace:true})
     }
 
     let MessageDetails = (chat) =>{
-        console.log(chat,'inside authcontext')
         setMessageDetail(chat)
         console.log(messageDetail,'zzzzzzzzzzzzzzzz')
     }
@@ -132,8 +135,14 @@ export const AuthProvider = ({children}) =>{
         setMessageDetail:setMessageDetail,
         roomid:roomid,
         setRoomid:setRoomid,
-        
+        added:added,
+        setAdded:setAdded,
+        viewfollowing:viewfollowing,
+        setViewfollowing:setViewfollowing,
+        viewfollower:viewfollower,
+        setViewfollower:setViewfollower,
 
+        
     }
 
     return(

@@ -11,7 +11,8 @@ urlpatterns = [
     path('',include('adminSide.urls')),
     path('follow/',include('followers.urls')),
     path('adminside/',include('adminSide.api.urls')),
-    path('chat/',include('chat.urls'))
+    path('chat/',include('chat.urls')),
+    # path('agora/',include('agora.urls'))
 
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

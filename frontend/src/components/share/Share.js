@@ -13,6 +13,7 @@ const Share = () => {
     })
 
   let user = useContext(AuthContext)
+  let {added,setAdded} = useContext(AuthContext)
 
   let u = user.user.user_id
   let navigate = useNavigate()
@@ -44,6 +45,7 @@ const Share = () => {
       let data = await response.json()
       if (response.status === 200){
         console.log(data)
+        setAdded(true)
         toast.success('successfully added post')
       }
       else if(response.status === 400) {
@@ -70,7 +72,7 @@ const Share = () => {
     return () => URL.revokeObjectURL(objectUrl)
 
 
-  }, [file])
+  }, [file,added])
 
   const setImage = (e) => {
     setFile(e.target.files[0])

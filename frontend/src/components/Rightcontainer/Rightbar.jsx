@@ -36,9 +36,10 @@ function Rightbar({ propsFollower, userlist, folow, usersfollower, }) {
 
 
       <List spacing={3}>
+        {console.log(propsFollower,'righiside')}
         {
 
-
+          
           propsFollower.map((foll, index) => (
 
             <>

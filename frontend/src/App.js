@@ -24,6 +24,7 @@ import MessagePage from './pages/MessagePage';
 import Topbar from "./components/topbar/Topbar";
 import AdminHome from "./pages/admin/adminPages/AdminHome";
 import AdminPosts from "./pages/admin/adminPages/AdminPosts";
+import PeoplePage from "./pages/PeoplePage";
 
 
 function App() {
@@ -53,6 +54,7 @@ function App() {
         <Route element={<HomePage/>} path="/" /> 
         <Route element={<ProfilePage/>} path="/profile/:usersid" />
         <Route element={<MessagePage/>} path="/message" />
+        <Route element={<PeoplePage/>} path="/people" />
 
 
         {/* admin  */}

@@ -103,7 +103,7 @@ function RegisterPage() {
                         </div>
                         <div className='login_input'>
                             <label htmlFor="email">Email</label>
-                            <input type="text" name='email' placeholder=' email'
+                            <input type="email" name='email' placeholder=' email'
                                 value={values.email}
                                 onChange={handelChange}
 

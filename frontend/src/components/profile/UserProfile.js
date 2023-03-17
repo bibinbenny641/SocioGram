@@ -60,11 +60,12 @@ function UserProfile() {
   const [newpost, setNewpost] = useState(false)
   const [follower, setFollowers] = useState([])
   const [following, setFollowing] = useState([])    
-  const [viewfollower, setViewfollower] = useState([])
-  const [viewfollowing, setViewfollowing] = useState([])
+  // const [viewfollower, setViewfollower] = useState([])
+  // const [viewfollowing, setViewfollowing] = useState([])
   const [post, setPost] = useState([])
   const [usersfollower, setUsersfollower] = useState(false)
   const [usersfollowing, setUsersfollowing] = useState(false)
+  let {viewfollower,viewfollowing,setViewfollower,setViewfollowing} = useContext(AuthContext) 
 
   const { usersid } = useParams();
   const [loading, setLoading] = useState(true)
@@ -76,6 +77,10 @@ function UserProfile() {
   const follving = function () {
     setUsersfollowing(true)
     setUsersfollower(false)
+  }
+  const handleClose = function(){
+    setUsersfollower(false)
+    setUsersfollowing(false)
   }
   const navigate = useNavigate()
   let userlist = async (usersid) => {
@@ -139,6 +144,7 @@ function UserProfile() {
     if (response.status === 200) {
 
       setPost(data.data)
+      console.log(post,'jsjsjsjjsjsjsjsj')
 
     } else {
       alert("Something went wrong!!")
@@ -193,13 +199,15 @@ function UserProfile() {
     setRefresh(false)
     setNewpost(false)
     userlist(usersid)
+    usersPosts()
   }, [refresh])
   console.log(post,'kdkdkdkdk')
 
   return (
 
     <>
-      <Center py={6}>
+    <div style={{overflowY:'scroll'}}>
+    <Center py={6}>
         <Box
           maxW={'850px'}
           w={'full'}
@@ -306,14 +314,16 @@ function UserProfile() {
 
           <Stack mt={8} direction={'row'} spacing={4}>
           
-          {usersid == user.user_id?
+          {usersid == user.user_id&&
           <Center>
             
             <EditProfile setRefresh={setRefresh} userdata={userdata} />
           </Center>
+          }
           
-           : 
-           (usersid!=setViewfollower.seconduser)?
+
+           {/* {
+           usersid!=user.user_id && viewfollowing?.includes(usersid)&&
            <div>
              <Button
             flex={1}
@@ -332,9 +342,10 @@ function UserProfile() {
             }}>
             UnFollow
           </Button>
-           </div>:
+           </div>}
            
-           
+           { 
+            usersid!=user.user_id && viewfollowing?.includes(usersid)&&
           <Button
             flex={1}
             fontSize={'sm'}
@@ -353,13 +364,14 @@ function UserProfile() {
             Follow
           </Button>
           
-           } 
+          
+           }  */}
         </Stack>
 
           {usersfollower ?
             <Tabs isFitted variant='enclosed'>
               <TabList mb='1em'>
-                <Tab>followers</Tab>
+                <Tab onClick={() => (handleClose())}> followers</Tab>
                 {/* <Tab>Two</Tab> */}
               </TabList>
               <TabPanels>
@@ -375,7 +387,7 @@ function UserProfile() {
             null
           }
           {usersfollowing ?
-            <Tabs isFitted variant='enclosed'>
+            <Tabs onClick={() => (handleClose())} isFitted variant='enclosed'>
               <TabList mb='1em'>
                 <Tab>following</Tab>
                 {/* <Tab>Two</Tab> */}
@@ -403,6 +415,9 @@ function UserProfile() {
          
         </Box>
       </Center>
+
+    </div>
+      
 
     
       {/* <div className="container-fluid overflow-auto  d-flex ">

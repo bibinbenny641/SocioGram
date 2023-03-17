@@ -57,7 +57,7 @@ function PostTable() {
   useEffect(() => {
     setAuthTokens(localStorage.getItem('authTokens') ? localStorage.getItem('authTokens') : null)
     post()
-  }, [])
+  }, [postlist])
 
 
 
@@ -125,7 +125,7 @@ function PostTable() {
                 </Td>
                 }
 
-                <Td> <Button colorScheme='red' onClick={() => handleClick(obj.id)} >Block</Button>{' '}</Td>
+                <Td> <Button colorScheme='red' onClick={() => handleClick(obj.id)} >Delete</Button>{' '}</Td>
 
 
               </Tr>

@@ -33,8 +33,7 @@ class followlist_class(APIView):
 
     def get(self,request,pk):
         data = request.data
-        print(data)
-        print("inside the get function")
+        
         er = FollowList.objects.filter(firstuser=pk)
         sec = FollowList.objects.filter(seconduser=pk)
         
@@ -156,12 +155,16 @@ def getcomments(request,id):
 @api_view(['GET'])
 @authentication_classes([JWTAuthentication])
 def suggestion(request,pk):
-    print('inside the suggestion')
-    print(pk)
-    user = User.objects.all().exclude(id=pk)
-    foll = User.objects.filter(followedByr__isnull=True)
+    
+    user = User.objects.filter().exclude(id=pk)
+    fo = FollowList.objects.all()
+    common = User.objects.exclude(id__in=FollowList.objects.values_list('firstuser',flat=True))
+    
+    
+    foll = User.objects.filter(followedByr__isnull=True).exclude(id=pk)
 
-    results = UserdemoSerializer(foll,many=True)
+    # print(foll)
+    results = UserdemoSerializer(common,many=True)
     if results.is_valid:
         return Response(results.data,status=status.HTTP_201_CREATED)
     else:
@@ -193,20 +196,47 @@ def deletePostAdmin(request,id):
     post.delete()
     return Response(status=status.HTTP_200_OK)
 
+################## end #######################
+
+
 @api_view(['POST'])
-@permission_classes([IsAdminUser])
 @authentication_classes([JWTAuthentication])
 def follow_a_user(request,id1,id2):
-    print(id1,id2)
+    
     id = int(id2)
     print(id)
     second = User.objects.values_list('id',flat=True).get(id=id2)
     secons_user = User.objects.get(pk = id2)
     print(secons_user)
-    # follow = FollowList.objects.create(firstuser = id1,seconduser = id)
-    data = {'hai':'success'}
+    if FollowList.objects.filter(firstuser = User.objects.get(id=id1),seconduser = User.objects.get(id=id2)).exists():
+        print('already exists..........')
+        unfollow = FollowList.objects.filter(firstuser = User.objects.get(id=id1),seconduser = User.objects.get(id=id2))
+        unfollow.delete()
+        data={'hai':'unfollowed'}
+    else:
+        follow = FollowList.objects.create(firstuser = User.objects.get(id=id1),seconduser = User.objects.get(id=id2))
+        data = {'hai':'followed'}
     return Response(data,status=status.HTTP_200_OK)
 
+@api_view(['GET'])
+@authentication_classes([JWTAuthentication])
+def follow_back_users(request,id1):
+    print('haiqqqqqqqqqqqqqqqqqqqqqqq')
+    following = FollowList.objects.filter(Q(firstuser = id1))
+    print(following)
+    f = FollowList.objects.filter(Q(firstuser=id1) and Q(seconduser=id1)).exclude(seconduser=id1)
+    
+    print(f,'1212121212')
+    follow = FollowList.objects.filter(seconduser = id1)
+    
+    serial = FollowlistSerializer(follow,many=True)
+    
+    print(follow,'sjjssj')
+    data={'hai':'hai'}
+    if serial.is_valid: 
+        return Response(serial.data,status=status.HTTP_200_OK)
+    else:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 ####################          #####################         ################

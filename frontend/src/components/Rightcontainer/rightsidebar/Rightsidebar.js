@@ -2,6 +2,8 @@ import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import AuthContext from "../../../context/AuthContext";
 import { useNavigate } from 'react-router-dom';
+import { Button, ButtonGroup } from '@chakra-ui/react'
+import { toast } from "react-toastify";
 
 import "./rightsidebar.css";
 
@@ -12,10 +14,13 @@ const Rightsidebar = () => {
   let { user } = useContext(AuthContext)
   let [authTokens, setAuthTokens] = useState(() => localStorage.getItem('authTokens') ? localStorage.getItem('authTokens') : null)
   let [suggesteduser, setSuggesteduser] = useState([])
+  let [followbackusers, setFollowbackusers] = useState([])
+  let {viewfollower,viewfollowing,setViewfollower,setViewfollowing} = useContext(AuthContext) 
+
  
 
   let followSuggestion = async () => {
-
+    console.log(suggesteduser, 'jjjjjjjjjjjjjjjjjjjjjjjj')
     let response = await fetch(`http://127.0.0.1:8000/follow/suggestion/${user.user_id}/`, {
       method: 'GET',
       headers: {
@@ -28,6 +33,7 @@ const Rightsidebar = () => {
 
     if (response.status === 201) {
       setSuggesteduser(data)
+      console.log(suggesteduser, 'sss')
 
 
     } else {
@@ -35,8 +41,9 @@ const Rightsidebar = () => {
 
     }
   }
+
   let followuser = async (id) => {
-    console.log(id,'followuser function')
+    console.log(id, 'followuser function')
     let response = await fetch(`http://127.0.0.1:8000/follow/follow_a_user/${user.user_id}/${id}/`, {
       method: 'POST',
       headers: {
@@ -48,20 +55,50 @@ const Rightsidebar = () => {
     let data = await response.json()
 
     if (response.status === 200) {
-      
-      alert('success')
+      console.log(data['hai'])
+      toast.success(data['hai'])
+
 
 
     } else {
       // logoutUser()
-      alert('failed')
+      // alert('failed')
 
     }
   }
+  let followback = async (id) => {
+    console.log(id, 'followuser function')
+    let response = await fetch(`http://127.0.0.1:8000/follow/follow_back_users/${user.user_id}/`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer  ${String(JSON.parse(authTokens).access)}`
+      },
 
-  
+    })
+    let data = await response.json()
+
+    if (response.status === 200) {
+      setFollowbackusers(data)
+      // alert('success')
+
+
+    } else {
+      // logoutUser()
+      // alert('failed')
+
+    }
+  }
+  const userProfile = (id) => {
+
+    navigate(`/profile/${id}`)
+
+  }
+
+
   useEffect(() => {
     followSuggestion()
+    followback()
 
   }, [])
 
@@ -70,95 +107,84 @@ const Rightsidebar = () => {
   return (
     <div className="rightBar">
       <div className="container">
-        <div className="item" >
-          <span>Suggestions For You</span>
+        <div className="item">
+          <span>Users Follows You</span>
+          {/* <div className="user">
+            {
+              followbackusers.map((i, index) => {
+                return (
+
+                  <>
+                    <div className="userInfo">
+                      <img
+                        src="https://images.pexels.com/photos/4881619/pexels-photo-4881619.jpeg?auto=compress&cs=tinysrgb&w=1600"
+                        alt=""
+                      />
+                      <p>
+                        <span>{i.id}</span> requested to follow you
+                      </p>
+                    </div>
+                    <span><Button colorScheme='blue' variant='outline'>Follow Back</Button></span>
+                  </>
+                )
+              })
+            }
+          </div> */}
           {
-            suggesteduser.map((i, index) => (
+            followbackusers.map((i, index) => (
 
               <div className="user">
-              {/* <Link > */}
-                <div className="userInfo">
+                {/* <Link > */}
+                <div onClick={() => { userProfile(i.id) }} className="userInfo">
                   <img
                     src="https://images.pexels.com/photos/4881619/pexels-photo-4881619.jpeg?auto=compress&cs=tinysrgb&w=1600"
                     alt=""
                   />
-                  
-                  <span >{i.fullname}</span>
+
+                  <span >{i.firstUname}</span>
                 </div>
-              {/* </Link> */}
+                {/* </Link> */}
                 <div className="buttons">
-                  <button onClick={() => { followuser(i.id) }} style={{background:"blue"}}>follow</button>
+                  { console.log(viewfollowing,'hshshshshsh')}
+                  <Button colorScheme='blue' onClick={() => { followuser(i.firstuser) }} >followback</Button>
+
                 </div>
 
               </div>
             ))
           }
-          {/* <div className="user">
-            <div className="userInfo">
-              <img
-                src="https://images.pexels.com/photos/4881619/pexels-photo-4881619.jpeg?auto=compress&cs=tinysrgb&w=1600"
-                alt=""
-              />
-              <span>Jane Doe</span>
-            </div>
-            <div className="buttons">
-              <button>follow</button>
-              <button>dismiss</button>
-            </div>
-          </div> */}
+
+
         </div>
+        <div className="item" >
+          {console.log(suggesteduser, 'jjsjsjsjs')}
+          <span>Suggestions For You</span>
+          {
+            suggesteduser.map((i, index) => (
+
+              <div className="user">
+                {/* <Link > */}
+                <div onClick={() => { userProfile(i.id) }} className="userInfo">
+                  <img
+                    src="https://images.pexels.com/photos/4881619/pexels-photo-4881619.jpeg?auto=compress&cs=tinysrgb&w=1600"
+                    alt=""
+                  />
+
+                  <span >{i.fullname}</span>
+                </div>
+                {/* </Link> */}
+                <div className="buttons">
+                  <Button colorScheme='blue' onClick={() => { followuser(i.id) }} >follow</Button>
+
+                </div>
+
+              </div>
+            ))
+          }
+
+        </div>
+
         {/* <div className="item">
-          <span>Latest Activities</span>
-          <div className="user">
-            <div className="userInfo">
-              <img
-                src="https://images.pexels.com/photos/4881619/pexels-photo-4881619.jpeg?auto=compress&cs=tinysrgb&w=1600"
-                alt=""
-              />
-              <p>
-                <span>Jane Doe</span> changed their cover picture
-              </p>
-            </div>
-            <span>1 min ago</span>
-          </div>
-          <div className="user">
-            <div className="userInfo">
-              <img
-                src="https://images.pexels.com/photos/4881619/pexels-photo-4881619.jpeg?auto=compress&cs=tinysrgb&w=1600"
-                alt=""
-              />
-              <p>
-                <span>Jane Doe</span> changed their cover picture
-              </p>
-            </div>
-            <span>1 min ago</span>
-          </div>
-          <div className="user">
-            <div className="userInfo">
-              <img
-                src="https://images.pexels.com/photos/4881619/pexels-photo-4881619.jpeg?auto=compress&cs=tinysrgb&w=1600"
-                alt=""
-              />
-              <p>
-                <span>Jane Doe</span> changed their cover picture
-              </p>
-            </div>
-            <span>1 min ago</span>
-          </div>
-          <div className="user">
-            <div className="userInfo">
-              <img
-                src="https://images.pexels.com/photos/4881619/pexels-photo-4881619.jpeg?auto=compress&cs=tinysrgb&w=1600"
-                alt=""
-              />
-              <p>
-                <span>Jane Doe</span> changed their cover picture
-              </p>
-            </div>
-            <span>1 min ago</span>
-          </div>
-        </div>
-        <div className="item">
           <span>Online Friends</span>
           <div className="user">
             <div className="userInfo">

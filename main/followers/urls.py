@@ -5,6 +5,7 @@ urlpatterns = [
     path('follow/',views.followlist_class.as_view(),name='follow'),
     path('follow/<pk>/',views.followlist_class.as_view(),name='follow_get'),
     path('follow_a_user/<id1>/<id2>/',views.follow_a_user,name='follow_a_user'),
+    path('follow_back_users/<id1>/',views.follow_back_users,name='follow_back_users'),
     
     path('addposts/<id>',views.addposts,name='addposts'),
     path('getposts/<id>/',views.getPosts,name='getposts'),

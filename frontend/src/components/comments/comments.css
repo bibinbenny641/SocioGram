@@ -106,3 +106,6 @@
     color: gray;
     font-size: 12px;
   }
+  .scroll_bar::-webkit-scrollbar{
+    display: none;
+  }

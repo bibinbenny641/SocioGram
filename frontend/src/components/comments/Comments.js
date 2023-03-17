@@ -8,31 +8,11 @@ import { useNavigate} from 'react-router-dom'
 
 const Comments = ({foll}) => {
   let {user} = useContext(AuthContext)
-  console.log(user,'jsjsjsj')
+
   let navigate = useNavigate()
   let [authTokens, setAuthTokens] = useState(() => localStorage.getItem('authTokens') ? localStorage.getItem('authTokens') : null)
   const [postcomment,setPostcomment] = useState([])
-  console.log(foll.id,'inside comments component')
-  console.log(postcomment,'jjjjjjjjjjj ')
-  //Temporary
-  const comments = [
-    {
-      id: 1,
-      desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem nequeaspernatur ullam aperiam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem nequeaspernatur ullam aperiam",
-      name: "John Doe",
-      userId: 1,
-      profilePicture:
-        "",
-    },
-    {
-      id: 2,
-      desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem nequeaspernatur ullam aperiam",
-      name: "Jane Doe",
-      userId: 2,
-      profilePicture:
-        "",
-    },
-  ];
+
   const [values,setValues] = useState('')
   console.log(values,'state values are herer ererererere')
   let hangleChange = (e)=>{
@@ -61,8 +41,9 @@ const Comments = ({foll}) => {
 
     if (response.status === 200) {
       
-      alert('success')
-
+      // alert('success')
+      toast.success('comment added')
+      
 
     } else {
       // logoutUser()
@@ -96,7 +77,8 @@ const Comments = ({foll}) => {
   }
   useEffect(() => {
     comm()
-  }, [],postcomment)
+  }, [postcomment],)
+
   return (
     <div className="comments container">
       <div  className="write">
@@ -105,8 +87,13 @@ const Comments = ({foll}) => {
         <button onClick={addcomment}>Send</button>
       </div>
       {console.log(foll.commenteduser,'jjj')}
+      {postcomment?
+      <div className="scroll_bar"
+      //  style={{height:"250px",overflowY:'scroll'}}
+       >
+
       {postcomment.map((com,i) => (
-        <div key={i} className="comment">
+        <div  key={i} className="comment">
           <img src="https://cdn-icons-png.flaticon.com/512/21/21104.png" alt="" />
           <div className="info " >
             <span>{com.user_na}</span>
@@ -118,6 +105,11 @@ const Comments = ({foll}) => {
           {/* <span className="date">1 hour ago</span> */}
         </div>
       ))}
+      </div>:
+      null
+
+      }
+      
 
       {/* {comments.map((comment,i) => (
         <div key={i} className="comment">

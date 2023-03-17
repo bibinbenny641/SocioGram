@@ -4,7 +4,7 @@
     position: sticky;
     top: 70px;
     height: calc(100vh - 70px);
-    height:55vh;
+    height:75vh;
     width: 40px;
     overflow: scroll;
     background-color: #f6f3f3;
@@ -83,9 +83,9 @@
   .theme-light .rightBar .container .item .user .buttons button:first-child {
     background-color: #5271ff;
   }
-  .theme-light .rightBar .container .item .user .buttons button:last-child {
+  /* .theme-light .rightBar .container .item .user .buttons button:last-child {
     background-color: #f0544f;
-  }
+  } */
   .theme-dark .rightBar {
     flex: 3;
     position: -webkit-sticky;
