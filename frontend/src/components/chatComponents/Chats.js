@@ -13,7 +13,7 @@ function Chats() {
   let { user } = useContext(AuthContext)
   let {logoutUser} = useContext(AuthContext)
   let {MessageDetails} = useContext(AuthContext)
-  let {roomid, setRoomid} = useContext(AuthContext)
+  let {roomid, setRoomid,isopen,setIsopen} = useContext(AuthContext)
 
 
   let chatlist = async () => {
@@ -36,6 +36,7 @@ function Chats() {
 
   }
   function handleClick(id){
+    setIsopen(true)
    
     createroom(id)
   }
@@ -79,7 +80,7 @@ function Chats() {
       {/* {members !== null?console.log('haiiiii'):console.log('hoiiii')} */}
       {members.map((chat, i) => {
         return (
-            <button onClick={()=>{handleClick(chat.seconduser);MessageDetails(chat)}}>
+            <button key={i} onClick={()=>{handleClick(chat.seconduser);MessageDetails(chat)}}>
 
                 <Chat
                 chat = {chat}

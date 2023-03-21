@@ -19,11 +19,11 @@
   margin-top: 20px; */
   /* margin-right: 20px; */
 }
-/* @media (max-width: 480px) {
+@media (max-width: 480px) {
   .theme-light .leftBar {
     display: none;
   }
-} */
+}
 .theme-light .leftBar::-webkit-scrollbar {
   display: none;
 }
@@ -80,7 +80,7 @@
   background-color: #222;
   color: whitesmoke;
 }
-@media (max-width: 480px) {
+@media (max-width: 880px) {
   .theme-dark .leftBar {
     display: none;
   }

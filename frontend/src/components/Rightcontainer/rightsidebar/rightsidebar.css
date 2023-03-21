@@ -14,7 +14,7 @@
       display: none;
     }
   }
-  @media (max-width: 960px) {
+  @media (max-width: 990px) {
     .theme-light .rightBar {
       display: none;
     }

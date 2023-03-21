@@ -3,13 +3,13 @@ import AuthContext from "../../context/AuthContext";
 import moment from 'moment';
 
 
-function Message({ msg, time, sender, sent }) {
+function Message({ msg, time, sender, sent,index }) {
   let { user } = React.useContext(AuthContext)
   return (
     // Message container
     <>
       {user.user_id === sender ?
-        <div>
+        <div key={index}>
           <div
             className={`flex justify-center items-center rounded-md w-fit my-1 ${"bg-gradient-to-r from-blue-500 to-cyan-500 ml-auto"
               }`}>

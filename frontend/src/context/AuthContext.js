@@ -27,6 +27,9 @@ export const AuthProvider = ({children}) =>{
     const [added,setAdded] = useState(false)
     const [viewfollowing, setViewfollowing] = useState([])
     const [viewfollower, setViewfollower] = useState([])
+    const [isopen,setIsopen] = useState(false)
+    const [result,setResult]=useState([''])
+
  
 
 
@@ -140,7 +143,8 @@ export const AuthProvider = ({children}) =>{
         viewfollowing:viewfollowing,
         setViewfollowing:setViewfollowing,
         viewfollower:viewfollower,
-        setViewfollower:setViewfollower,
+        setViewfollower:setViewfollower,isopen:isopen,setIsopen:setIsopen,
+        result:result,setResult:setResult,
 
         
     }

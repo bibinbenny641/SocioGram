@@ -49,10 +49,6 @@ function EditProfile({refresh,setRefresh,userdata}) {
 
 
 
-
-
-  
-
   let editPro = async(e)=>{
     e.preventDefault()
     
@@ -65,11 +61,7 @@ function EditProfile({refresh,setRefresh,userdata}) {
         body:JSON.stringify({'fullname':e.target.fullname.value,'user_name':e.target.username.value})
         
     })
-    let data = await response.json()
-    
-    console.log("success ")
-    console.log(data)
-    console.log("success2");
+    let data = await response.json()    
 
     if (response.status===400){
         alert("othilla mwonuse")
@@ -83,51 +75,7 @@ function EditProfile({refresh,setRefresh,userdata}) {
   
   return (
     <>
-    {/* <center>
-
-      
-      <Button onClick={handleShow} leftIcon={<MdBuild />} colorScheme='blue' variant='solid'>
-    Edit Profile
-  </Button>
-    </center>
-
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Edit Profile</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-        <form onSubmit={editPro}>
-            <div className='login_input'>
-                <label htmlFor="email">Full Name</label>
-                <input type="text" name='fullname' placeholder={user.fullname}
-                />
-            </div>
-            <div className='login_input'>
-                <label htmlFor="email">Nickname</label>
-                <input type="text" name='username' placeholder={user.user_name}
-                />
-            </div>
-            
-            <center>
-
-            <button style={{color:'green'}} className=' addpostbutton' onClick={handleClose} >Save</button>
-            </center>
-            
-        </form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="primary" onClick={handleClose}>
-            Close
-          </Button>
-         
-        </Modal.Footer>
-      </Modal> */}
-
-
-
-
-
-
+    
       <Button 
         leftIcon={<MdBuild />}
         ml='4'
@@ -158,8 +106,8 @@ function EditProfile({refresh,setRefresh,userdata}) {
             </FormControl>
             
             <center>
-
-            <Button colorScheme='blue' variant='outline'  onClick={onClose} >Save</Button>
+            
+            <Button style={{margin:'1vh'}} colorScheme='blue' variant='outline'  onClick={onClose} >Save</Button>
             </center>
             
         </form>
@@ -167,7 +115,7 @@ function EditProfile({refresh,setRefresh,userdata}) {
 
           </ModalBody>
           <ModalFooter>
-            <Button onClick={onClose}>Close</Button>
+            {/* <Button onClick={onClose}>Close</Button> */}
           </ModalFooter>
         </ModalContent>
       </Modal>

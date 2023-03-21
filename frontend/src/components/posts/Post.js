@@ -14,20 +14,21 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { Link } from "react-router-dom";
 import Comments from "../comments/Comments";
 import InnerPost from "./InnerPost";
-import { useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import Results from "../results/Results";
 
 export default function Post({ setLoading }) {
   let { user } = useContext(AuthContext)
-  let {added,setAdded} = useContext(AuthContext)
+  let { added, setAdded } = useContext(AuthContext)
   const [viewposts, setViewposts] = useState([])
-  let {logoutUser} = useContext(AuthContext)
+  let { logoutUser } = useContext(AuthContext)
   let navigate = useNavigate()
-  console.log(viewposts,'postsmmmm')
+  console.log(viewposts, 'postsmmmm')
 
 
   let [authTokens, setAuthTokens] = useState(() => localStorage.getItem('authTokens') ? localStorage.getItem('authTokens') : null)
-  
- 
+
+
   let postGet = async () => {
 
     let response = await fetch(`http://127.0.0.1:8000/follow/getposts/${user.user_id}/`, {
@@ -46,7 +47,7 @@ export default function Post({ setLoading }) {
       setAdded(false)
       setViewposts(data.data)
     } else {
-      
+
       logoutUser()
 
     }
@@ -58,9 +59,10 @@ export default function Post({ setLoading }) {
 
   return (
     <>
-    
-    
 
+
+
+      
       {
         viewposts.map((foll, i) => (
           <div key={i}>

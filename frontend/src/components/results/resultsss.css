@@ -1,0 +1,13 @@
+.search-results-container{
+    background-color: rgb(246, 216, 249);
+    position: absolute;
+    margin-top: 10vh;
+    height: auto;
+    width: 20vh;
+    padding-left: 8vh;
+    border-radius: 20px;
+    left: 1;
+    top: 20;
+    /* overflow-y: scroll; */
+
+}

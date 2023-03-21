@@ -168,14 +168,12 @@ const HomePage = () => {
                                 </CardHeader>
                                 <CardBody>
                                     <Text>
-                                        With Chakra UI, I wanted to sync the speed of development with the speed
-                                        of design. I wanted the developer to be just as excited as the designer to
-                                        create a screen.
+                                        Sociogram enables you to find new peoples and interact with them.
                                     </Text>
                                 </CardBody>
                                 <Image
                                     objectFit='cover'
-                                    src='https://images.unsplash.com/photo-1531403009284-440f080d1e12?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80'
+                                    src='https://scontent.fcok10-4.fna.fbcdn.net/v/t39.30808-1/277781981_370306511774754_7754984541117216266_n.jpg?stp=cp0_dst-jpg_e15_p120x120_q65&_nc_cat=103&ccb=1-7&_nc_sid=dbb9e7&_nc_ohc=eu7QOemgbH0AX_sJIbD&_nc_ht=scontent.fcok10-4.fna&oh=00_AfDB7FsCWlwmS1U8TN8-5WAC5vH04fmaXVTkIy-XRSyurQ&oe=641A3586'
                                     alt='Chakra UI'
                                 />
 

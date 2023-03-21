@@ -93,19 +93,21 @@ def userPost(request,uid):
 
 
 @api_view(['POST'])
-@authentication_classes([JWTAuthentication])
-def searchUser(request):
+def searching(request):
     print("search working")
     print(request.data)
     
-    res = User.objects.filter(Q(fullname__icontains=request.data['name']) | Q(user_name__icontains=request.data['name']))
-    print("hai")
+    res = User.objects.filter(Q(fullname__icontains=request.data['input']) | Q(user_name__icontains=request.data['input']))
+    print(res)
     for i in res:
         print(i.fullname)
     
     results = UserdemoSerializer(res,many=True)
 
-    return Response({'results':results.data})
+    if results.is_valid:
+        return Response(results.data,status=status.HTTP_201_CREATED)
+    else:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
 @authentication_classes([JWTAuthentication])
@@ -140,6 +142,29 @@ def addcomments(request,id,id2):
     ss = {'hai':'hh'}
     return Response(ss,status=status.HTTP_200_OK)
 
+
+@api_view(['POST'])
+def editcomment(request,id):
+    print(id,'2222222222222222222222222222222222222222222222222222222222222222222')
+    data = request.data
+    c = data['datas']
+    print(c)
+    comments = Comments.objects.get(id=id)
+    print(comments.comment)
+    comments.comment = c['comment']
+    comments.save()
+
+    data = {'status':'dome'}
+    return Response(data,status=status.HTTP_200_OK)
+
+@api_view(['POST'])
+def deletecomment(request,id):
+    comm = Comments.objects.get(id=id).delete()
+    data = {'status':'dome'}
+    return Response(data,status=status.HTTP_200_OK)
+
+
+
 @api_view(['GET'])
 def getcomments(request,id):
     print("working")
@@ -158,12 +183,12 @@ def suggestion(request,pk):
     
     user = User.objects.filter().exclude(id=pk)
     fo = FollowList.objects.all()
-    common = User.objects.exclude(id__in=FollowList.objects.values_list('firstuser',flat=True))
+    common = User.objects.exclude(id__in=FollowList.objects.values_list('seconduser',flat=True))
     
     
     foll = User.objects.filter(followedByr__isnull=True).exclude(id=pk)
 
-    # print(foll)
+    
     results = UserdemoSerializer(common,many=True)
     if results.is_valid:
         return Response(results.data,status=status.HTTP_201_CREATED)
@@ -224,9 +249,8 @@ def follow_back_users(request,id1):
     print('haiqqqqqqqqqqqqqqqqqqqqqqq')
     following = FollowList.objects.filter(Q(firstuser = id1))
     print(following)
-    f = FollowList.objects.filter(Q(firstuser=id1) and Q(seconduser=id1)).exclude(seconduser=id1)
-    
-    print(f,'1212121212')
+    # us = FollowList.objects.exclude(firstuser_id__in=FollowList.objects.filter(seconduser=id1)).filter(firstuser=id1)
+    # print(us,'jjjjjjjjjjjjjjjjjjjj...')
     follow = FollowList.objects.filter(seconduser = id1)
     
     serial = FollowlistSerializer(follow,many=True)
@@ -240,4 +264,22 @@ def follow_back_users(request,id1):
 
 
 ####################          #####################         ################
+@api_view(['GET'])
+@authentication_classes([JWTAuthentication])
+def check_user(request,id1,id2):
+    print('haii')
+    # follow = FollowList.objects.filter(Q(firstuser = id1)&Q(seconduser = id2)).exists()
+    # print(follow,'ssss')
+    # result = {'ho':'hai'}
+    # return Response(follow,status=status.HTTP_200_OK)
+
+    if FollowList.objects.filter(Q(firstuser = id1)&Q(seconduser = id2)).exists():
+        return Response({'status':'Unfollow'},status=status.HTTP_200_OK)
+    else:
+        return Response({'status':'Follow'},status=status.HTTP_200_OK)
+
+
+
+
+
 

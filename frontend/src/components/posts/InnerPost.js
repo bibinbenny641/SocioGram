@@ -5,9 +5,10 @@ import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
 import { Divider } from '@chakra-ui/react'
 import { Card, CardHeader, CardBody, CardFooter, Flex, Avatar, Box, Button, Heading, Text, Image, IconButton } from '@chakra-ui/react'
 import moment from 'moment';
+import EditIcon from '@mui/icons-material/Edit';
 
 
-export default function InnerPost({ foll, Comments, postGet,viewposts }) {
+export default function InnerPost({ foll, Comments, postGet, viewposts,currentuser}) {
     const [commentOpen, setCommentOpen] = useState(false);
     const [liked, setLiked] = useState(false)
     const navigate = useNavigate()
@@ -17,7 +18,7 @@ export default function InnerPost({ foll, Comments, postGet,viewposts }) {
         setCommentOpen(!commentOpen)
     }
     const userProfile = (id) => {
-        
+
         navigate(`/profile/${id}`)
 
     }
@@ -49,7 +50,7 @@ export default function InnerPost({ foll, Comments, postGet,viewposts }) {
     return (
 
         <>
-            {foll!==null?console.log('hsi'):console.log('haaaaaaaaaa')}
+            
             <Card maxW='700px' paddingTop={50}>
                 <CardHeader>
                     <Flex spacing='4'>
@@ -72,18 +73,24 @@ export default function InnerPost({ foll, Comments, postGet,viewposts }) {
                 {
                     foll.postImage === "/media/null" ?
                         <CardBody>
-                            <Text>
-                                {foll.postCaptioin}
-                            </Text>
+                            <strong>
+
+                                <Text fontSize='20px'>
+                                    {foll.postCaptioin}
+                                </Text>
+                            </strong>
                         </CardBody>
                         :
 
 
                         <>
                             <CardBody>
-                                <Text>
-                                    {foll.postCaptioin}
-                                </Text>
+                                <strong>
+
+                                    <Text fontSize='20px'>
+                                        {foll.postCaptioin}
+                                    </Text>
+                                </strong>
                             </CardBody>
                             <Image
                                 objectFit='cover'
@@ -105,7 +112,7 @@ export default function InnerPost({ foll, Comments, postGet,viewposts }) {
                     }}
                 >
                     <Button onClick={() => { likebutton(foll.id) }} flex='1' variant='ghost' >
-                        <span><FavoriteOutlinedIcon style={{ color: 'red' }} /></span>
+                        <span><FavoriteOutlinedIcon style={{ color: 'blue' }} /></span>
                         <span>{foll.liked_post.length}</span>
 
                     </Button>
@@ -113,7 +120,24 @@ export default function InnerPost({ foll, Comments, postGet,viewposts }) {
                         Comments
                     </Button>
                     <Button flex='1' variant='ghost'>
-                        Share
+                        {/* {
+                            user.user_id === foll.user ?
+
+                            <EditIcon/>
+                            :
+                            null
+                        } */}
+                        {currentuser}
+                    </Button>
+                    <Button flex='1' variant='ghost'>
+                        {/* {
+                            user.user_id === foll.user ?
+
+                            <EditIcon/>
+                            :
+                            null
+                        } */}
+                        {currentuser}
                     </Button>
                     <div>
                         {commentOpen && <Comments foll={foll} />}

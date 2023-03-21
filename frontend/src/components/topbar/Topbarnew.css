@@ -1,5 +1,5 @@
 .navbar{
-  position: fixed;
+  position: sticky;
   top: 0;
   width: 100%;}
 
@@ -20,6 +20,7 @@
   .theme-light .navbar .left {
     display: flex;
     align-items: center;
+    position: relative;
     gap: 30px;
   }
   .theme-light .navbar .left span {
@@ -29,6 +30,7 @@
   }
   .theme-light .navbar .left .search {
     display: flex;
+    /* position: relative; */
     align-items: center;
     gap: 10px;
     border: 1px solid lightgray;
@@ -38,12 +40,21 @@
   .theme-light .navbar .left .search input {
     border: none;
     width: 500px;
+    /* position: relative; */
     background-color: transparent;
     color: #000;
   }
   @media (max-width: 480px) {
     .theme-light .navbar .left .search input {
-      display: none;
+      /* display: none; */
+      width:200px;
+    }
+  }
+  @media (max-width: 390px) {
+    .theme-light .navbar .left .search input {
+      /* display: none; */
+      /* width:100px */
+      width: 50px;
     }
   }
   @media (max-width: 960px) {

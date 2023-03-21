@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
+import { Tabs, TabList, TabPanels, Tab, TabPanel, Card } from '@chakra-ui/react'
 import AuthContext from '../../context/AuthContext'
 import { toast } from "react-toastify";
 
@@ -32,8 +32,8 @@ function Friends() {
     const profile = (id) => {
 
         navigate(`/profile/${id}`)
-    
-      }
+
+    }
 
 
     let getPeoples = async () => {
@@ -60,130 +60,116 @@ function Friends() {
     let unfollow = async (id) => {
         console.log(id, 'followuser function')
         let response = await fetch(`http://127.0.0.1:8000/follow/follow_a_user/${user.user_id}/${id}/`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer  ${String(JSON.parse(authTokens).access)}`
-          },
-    
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer  ${String(JSON.parse(authTokens).access)}`
+            },
+
         })
         let data = await response.json()
-    
+
         if (response.status === 200) {
-          console.log(data['hai'])
-          toast.success(data['hai'])
-          getPeoples()
-    
-    
-    
+            console.log(data['hai'])
+            toast.success(data['hai'])
+            getPeoples()
+
+
+
         } else {
-          // logoutUser()
-          // alert('failed')
-    
+            // logoutUser()
+            // alert('failed')
+
         }
-      }
+    }
     useEffect(() => {
         getPeoples()
 
     }, [follower])
 
     return (
-        <>
-            <Tabs style={{ width: "50vh" }} isFitted variant='enclosed'>
-                <TabList mb='1em'>
-                    <Tab>Followers</Tab>
-                    <Tab>Following</Tab>
-                </TabList>
-                <TabPanels>
-                    <TabPanel>
-                        <Stack direction='column'>
+        <><div>
+            <Card maxW='700px' paddingTop={50}>
+                {
+                    follower || following ?
+                        <Tabs style={{ width: "50vh", height: '50vh', overflowY: 'scroll' }} isFitted variant='enclosed'>
+                            <TabList mb='1em'>
+                                <Tab>Followers</Tab>
+                                <Tab>Following</Tab>
+                            </TabList>
+                            <TabPanels>
+                                <TabPanel>
+                                    <Stack direction='column'>
 
-                            {follower.map((k, index) => (
-                                <>
-                                    <Flex key={index}>
-                                        <Box p='4' bg='white.400'>
-                                            <center>
+                                        {follower.map((k, index) => (
+                                            <>
+                                                <Flex key={index}>
+                                                    <Box p='4' bg='white.400'>
+                                                        <center>
 
-                                                <strong>
+                                                            <strong>
 
-                                                    {k.firstUname}
-                                                </strong>
+                                                                {k.firstUname}
+                                                            </strong>
 
-                                            </center>
-                                        </Box>
-                                        <Spacer />
-                                        <Box p='4' bg='white.400'>
-                                            
-                                            <Button onClick={() => { profile(k.firstuser) }} colorScheme='teal' variant='outline'>
-                                                ViewProfile
-                                            </Button>
-                                        </Box>
-                                    </Flex>
-                                </>
-                            ))}
-                        </Stack>
+                                                        </center>
+                                                    </Box>
+                                                    <Spacer />
+                                                    <Box p='4' bg='white.400'>
 
-                    </TabPanel>
-                    <TabPanel>
+                                                        <Button onClick={() => { profile(k.firstuser) }} colorScheme='teal' variant='outline'>
+                                                            ViewProfile
+                                                        </Button>
+                                                    </Box>
+                                                </Flex>
+                                            </>
+                                        ))}
+                                    </Stack>
 
-                        <Stack direction='column'>
-                            {following.map((k, index) => (
-                                <>
-                                    <Flex key={index}>
-                                        <Box p='4' bg='white.400'>
-                                            <center>
+                                </TabPanel>
+                                <TabPanel>
 
-                                                <strong>
+                                    <Stack direction='column'>
+                                        {following.map((k, index) => (
+                                            <>
+                                                <Flex key={index}>
+                                                    <Box p='4' bg='white.400'>
+                                                        <center>
 
-                                                    {k.secondUname}
-                                                </strong>
+                                                            <strong>
 
-                                            </center>
-                                        </Box>
-                                        <Spacer />
-                                        <Box p='4' bg='white.400'>
-                                        <Button onClick={() => { unfollow(k.seconduser) }} colorScheme='red' variant='outline'>
-                                                UnFollow
-                                            </Button>
-                                        <Button onClick={() => { profile(k.firstuser) }} colorScheme='teal' variant='outline'>
-                                                ViewProfile
-                                            </Button>
+                                                                {k.secondUname}
+                                                            </strong>
 
-                                        </Box>
-                                    </Flex>
-                                </>
-                            ))}
-                        </Stack>
-                    </TabPanel>
-                </TabPanels>
-            </Tabs>
+                                                        </center>
+                                                    </Box>
+                                                    <Spacer />
+                                                    <Box p='4' bg='white.400'>
+                                                        <Button onClick={() => { unfollow(k.seconduser) }} colorScheme='red' variant='outline'>
+                                                            UnFollow
+                                                        </Button>
+                                                        <Button onClick={() => { profile(k.seconduser) }} colorScheme='teal' variant='outline'>
+                                                            ViewProfile
+                                                        </Button>
+
+                                                    </Box>
+                                                </Flex>
+                                            </>
+                                        ))}
+                                    </Stack>
+                                </TabPanel>
+                            </TabPanels>
+                        </Tabs>
+                        :
+                        null
+                }
+
+            </Card>
+
+        </div>
         </>
     )
 }
 
 export default Friends
 
-
-{/* <Stack direction='column'>
-                            {follower.map((k, index) => (
-
-                                <div>
-                                    <div>
-                                        <center>
-
-                                            <strong style={{ padding: '10vh' }}>
-
-                                                {k.firstUname}
-                                            </strong>
-                                            
-                                        </center>
-
-                                    </div>
-                                    <div>
-                                    <Badge colorScheme='green'>Success</Badge>
-                                    </div>
-
-                                </div>
-
-                            ))}
-                        </Stack> */}

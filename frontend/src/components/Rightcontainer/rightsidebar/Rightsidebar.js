@@ -15,12 +15,11 @@ const Rightsidebar = () => {
   let [authTokens, setAuthTokens] = useState(() => localStorage.getItem('authTokens') ? localStorage.getItem('authTokens') : null)
   let [suggesteduser, setSuggesteduser] = useState([])
   let [followbackusers, setFollowbackusers] = useState([])
-  let {viewfollower,viewfollowing,setViewfollower,setViewfollowing} = useContext(AuthContext) 
+  let { viewfollower, viewfollowing, setViewfollower, setViewfollowing, result, setResult } = useContext(AuthContext)
 
- 
+
 
   let followSuggestion = async () => {
-    console.log(suggesteduser, 'jjjjjjjjjjjjjjjjjjjjjjjj')
     let response = await fetch(`http://127.0.0.1:8000/follow/suggestion/${user.user_id}/`, {
       method: 'GET',
       headers: {
@@ -55,7 +54,6 @@ const Rightsidebar = () => {
     let data = await response.json()
 
     if (response.status === 200) {
-      console.log(data['hai'])
       toast.success(data['hai'])
 
 
@@ -107,45 +105,26 @@ const Rightsidebar = () => {
   return (
     <div className="rightBar">
       <div className="container">
-        <div className="item">
+        {/* <div className="item">
           <span>Users Follows You</span>
-          {/* <div className="user">
-            {
-              followbackusers.map((i, index) => {
-                return (
 
-                  <>
-                    <div className="userInfo">
-                      <img
-                        src="https://images.pexels.com/photos/4881619/pexels-photo-4881619.jpeg?auto=compress&cs=tinysrgb&w=1600"
-                        alt=""
-                      />
-                      <p>
-                        <span>{i.id}</span> requested to follow you
-                      </p>
-                    </div>
-                    <span><Button colorScheme='blue' variant='outline'>Follow Back</Button></span>
-                  </>
-                )
-              })
-            }
-          </div> */}
+          
           {
-            followbackusers.map((i, index) => (
+            result.map((i, index) => (
 
-              <div className="user">
-                {/* <Link > */}
+              <div key={index} className="user">
+
                 <div onClick={() => { userProfile(i.id) }} className="userInfo">
                   <img
                     src="https://images.pexels.com/photos/4881619/pexels-photo-4881619.jpeg?auto=compress&cs=tinysrgb&w=1600"
                     alt=""
                   />
 
-                  <span >{i.firstUname}</span>
+                  <span >{i.fullname}</span>
                 </div>
-                {/* </Link> */}
+
                 <div className="buttons">
-                  { console.log(viewfollowing,'hshshshshsh')}
+                  {console.log(viewfollowing, 'hshshshshsh')}
                   <Button colorScheme='blue' onClick={() => { followuser(i.firstuser) }} >followback</Button>
 
                 </div>
@@ -155,7 +134,8 @@ const Rightsidebar = () => {
           }
 
 
-        </div>
+
+        </div> */}
         <div className="item" >
           {console.log(suggesteduser, 'jjsjsjsjs')}
           <span>Suggestions For You</span>

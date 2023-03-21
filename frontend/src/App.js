@@ -25,6 +25,7 @@ import Topbar from "./components/topbar/Topbar";
 import AdminHome from "./pages/admin/adminPages/AdminHome";
 import AdminPosts from "./pages/admin/adminPages/AdminPosts";
 import PeoplePage from "./pages/PeoplePage";
+import PagenotFound from "./components/pageNotFound/PagenotFound";
 
 
 function App() {
@@ -55,6 +56,7 @@ function App() {
         <Route element={<ProfilePage/>} path="/profile/:usersid" />
         <Route element={<MessagePage/>} path="/message" />
         <Route element={<PeoplePage/>} path="/people" />
+        <Route element={<PagenotFound/>} path="*" />
 
 
         {/* admin  */}
@@ -67,6 +69,7 @@ function App() {
        <Route exact path="/" element={<PrivateRoute/>}  > 
        <Route element={<AdminPosts/>} path="/admin/posts" />
        </Route>
+
         
         </Routes>
         </AuthProvider>
