@@ -142,7 +142,7 @@ const Rightsidebar = () => {
           {
             suggesteduser.map((i, index) => (
 
-              <div className="user">
+              <div key={index} className="user">
                 {/* <Link > */}
                 <div onClick={() => { userProfile(i.id) }} className="userInfo">
                   <img

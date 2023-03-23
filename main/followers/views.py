@@ -145,12 +145,9 @@ def addcomments(request,id,id2):
 
 @api_view(['POST'])
 def editcomment(request,id):
-    print(id,'2222222222222222222222222222222222222222222222222222222222222222222')
     data = request.data
     c = data['datas']
-    print(c)
     comments = Comments.objects.get(id=id)
-    print(comments.comment)
     comments.comment = c['comment']
     comments.save()
 
@@ -189,7 +186,7 @@ def suggestion(request,pk):
     foll = User.objects.filter(followedByr__isnull=True).exclude(id=pk)
 
     
-    results = UserdemoSerializer(common,many=True)
+    results = UserdemoSerializer(user,many=True)
     if results.is_valid:
         return Response(results.data,status=status.HTTP_201_CREATED)
     else:
@@ -212,7 +209,6 @@ def adminpost(request):
 
 
 @api_view(['PATCH'])
-@permission_classes([IsAdminUser])
 @authentication_classes([JWTAuthentication])
 def deletePostAdmin(request,id):
     print(id)
@@ -221,6 +217,20 @@ def deletePostAdmin(request,id):
     post.delete()
     return Response(status=status.HTTP_200_OK)
 
+
+
+@api_view(['PATCH'])
+@authentication_classes([JWTAuthentication])
+def editpost(request,id):
+    print(id)
+    print(request.data)
+    post = Posts.objects.get(id=id)
+    print(post.postCaptioin)
+    p = request.data['caption']
+    post.postCaptioin = p['comment']
+    post.save()
+    d = {'hai':'success'}
+    return Response(d,status=status.HTTP_200_OK)
 ################## end #######################
 
 

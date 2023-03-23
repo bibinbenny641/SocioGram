@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Abril+Fatface|Lato");
+/* @import url("https://fonts.googleapis.com/css?family=Abril+Fatface|Lato");
 body {
   background: #D3DEEA;
 }
@@ -139,7 +139,7 @@ body {
   margin-top: 10px;
 }
 
-/*text styling*/
+
 h1 {
   font-family: "Abril Fatface", serif;
   color: #EDEDED;
@@ -179,7 +179,7 @@ p {
   margin-top: 10px;
 }
 
-/*search style*/
+
 .search-bar {
   border: 1px solid #BFC0C0;
   padding: 5px;
@@ -245,4 +245,4 @@ footer a {
 }
 footer a:hover {
   color: #7d7d7d;
-}
+} */

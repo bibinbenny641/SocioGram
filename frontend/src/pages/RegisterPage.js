@@ -5,8 +5,27 @@ import AuthContext from '../context/AuthContext';
 import { Link, useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify'
 import Validation from './Validation';
+import {
+    Flex,
+    Heading,
+    Input,
+    Button,
+    InputGroup,
+    Stack,
+    InputLeftElement,
+    chakra,
+    Box,
+    Avatar,
+    FormControl,
+    FormHelperText,
+    InputRightElement
+  } from "@chakra-ui/react";
+  import { FaUserAlt, FaLock } from "react-icons/fa";
 
-import './register.css'
+const CFaUserAlt = chakra(FaUserAlt);
+const CFaLock = chakra(FaLock);
+
+
 function RegisterPage() {
     const navigate = useNavigate()
     const generateError = (err) =>
@@ -89,7 +108,7 @@ function RegisterPage() {
 
     return (
         <>
-            <div className='login_main'>
+            {/* <div className='login_main'>
                 <div className='login_container'>
                     <h2 className='iconname'>SocioGram Signup</h2>
                     <form >
@@ -140,12 +159,133 @@ function RegisterPage() {
                         </div>
                         <button onClick={handleSubmit} >Signup</button>
                         <span>
-                            Already have an have an account? <Link to='/'>Login</Link>
+                            Already have an have an account? <Link to='/login'>Login</Link>
                         </span>
                     </form>
                     <ToastContainer />
                 </div>
-            </div>
+            </div> */}
+            <Flex
+      flexDirection="column"
+      width="100wh"
+      height="100vh"
+      backgroundColor="gray.200"
+      justifyContent="center"
+      alignItems="center"
+    >
+      <Stack
+        flexDir="column"
+        mb="2"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Avatar bg="blue.500" />
+        <Heading color="blue.400">SocioGram</Heading>
+        <Box minW={{ base: "90%", md: "468px" }}>
+          <form >
+            <Stack
+              spacing={4}
+              p="1rem"
+              backgroundColor="whiteAlpha.900"
+              boxShadow="md"
+            >
+                <FormControl>
+                <InputGroup>
+                  <InputLeftElement
+                    pointerEvents="none"
+                    children={<CFaUserAlt color="gray.300" />}
+                  />
+                  <Input type="text" name='fullname' placeholder='Full Name'
+                                value={values.fullname}
+                                onChange={handelChange}
+                            />
+                </InputGroup>
+              </FormControl>
+              <FormControl>
+                <InputGroup>
+                  <InputLeftElement
+                    pointerEvents="none"
+                    children={<CFaUserAlt color="gray.300" />}
+                  />
+                  <Input type="email" name='email' placeholder=' email'
+                                value={values.email}
+                                onChange={handelChange}
+
+                            />
+                            {errors.email && <p className='error'>{errors.email}</p>}
+                </InputGroup>
+              </FormControl>
+              <FormControl>
+                <InputGroup>
+                  <InputLeftElement
+                    pointerEvents="none"
+                    children={<CFaUserAlt color="gray.300" />}
+                  />
+                  <Input type="number" name='phoneno' placeholder='Phone No'
+                                value={values.phoneno}
+                                onChange={handelChange}
+                            />
+                            {errors.phoneno && <p className='error'>{errors.phoneno}</p>}
+
+                </InputGroup>
+              </FormControl>
+              <FormControl>
+                <InputGroup>
+                  <InputLeftElement
+                    pointerEvents="none"
+                    color="gray.300"
+                    children={<CFaLock color="gray.300" />}
+                  />
+                  <Input type="password" name='password1' placeholder='Password'
+                                value={values.password1}
+                                onChange={handelChange}
+                            />
+                            {errors.password1 && <p className='error'>{errors.password1}</p>}
+
+                  <InputRightElement width="4.5rem">
+                  </InputRightElement>
+                </InputGroup>
+                
+              </FormControl>
+              <FormControl>
+                <InputGroup>
+                  <InputLeftElement
+                    pointerEvents="none"
+                    color="gray.300"
+                    children={<CFaLock color="gray.300" />}
+                  />
+                  <Input type="password" name='password2' placeholder='Password'
+                                value={values.password2}
+                                onChange={handelChange}
+                            />
+                            {errors.password2 && <p className='error'>{errors.password2}</p>}
+
+                  <InputRightElement width="4.5rem">
+                  </InputRightElement>
+                </InputGroup>
+                
+              </FormControl>
+              <Button
+              onClick={handleSubmit}
+                borderRadius={0}
+                type="submit"
+                variant="solid"
+                colorScheme="blue"
+                width="full"
+              >
+                Signup
+              </Button>
+            </Stack>
+          </form>
+        </Box>
+      </Stack>
+      <Box>
+        Already have an account?{" "}
+        <Link to={'/login'} color="teal.500" >
+          Login
+        </Link>
+      </Box>
+    </Flex>
         </>
 
     )

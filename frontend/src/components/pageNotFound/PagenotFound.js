@@ -1,47 +1,33 @@
 import React from 'react'
-import "./notfoung.css";
+import { useNavigate } from 'react-router-dom'
+// import "./notfoung.css";
+
+
 
 function PagenotFound() {
+    const navigate = useNavigate()
+    const goback = (()=>{
+        navigate('/')
+
+    })
     return (
         <>
-            <div id="background"></div>
-            <div class="top">
-                <h1>404</h1>
-                <h3>page not found</h3>
-            </div>
-            <div class="container">
-                <div class="ghost-copy">
-                    <div class="one"></div>
-                    <div class="two"></div>
-                    <div class="three"></div>
-                    <div class="four"></div>
+            <div className="d-flex align-items-center justify-content-center vh-100">
+            <div className="text-center row">
+                <div className=" col-md-6">
+                    <img src="https://cdn.pixabay.com/photo/2017/03/09/12/31/error-2129569__340.jpg" alt=""
+                        className="img-fluid"/>
                 </div>
-                <div class="ghost">
-                    <div class="face">
-                        <div class="eye"></div>
-                        <div class="eye-right"></div>
-                        <div class="mouth"></div>
-                    </div>
+                <div className=" col-md-6 mt-5">
+                    <p className="fs-3"> <span className="text-danger">Opps!</span> Page not found.</p>
+                    <p className="lead">
+                        The page you’re looking for doesn’t exist.
+                    </p>
+                    <a onClick={goback} className="btn btn-primary">Go Home</a>
                 </div>
-                <div class="shadow"></div>
-            </div>
-            <div class="bottom">
-                <p>Boo, looks like a ghost stole this page!</p>
-                <form class="search">
-                    <input type="text" class="search-bar" placeholder="Search" />
-                    <button type="submit" class="search-btn">
-                        <i class="fa fa-search"></i>
-                    </button>
-                </form>
-                <div class="buttons">
-                    <button class="btn">Back</button>
-                    <button class="btn">Home</button>
-                </div>
-            </div>
 
-            <footer>
-                <p>made by <a href="https://codepen.io/juliepark"> julie</a> ♡</p>
-            </footer>
+            </div>
+        </div>
         </>
     )
 }

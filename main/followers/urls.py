@@ -13,6 +13,8 @@ urlpatterns = [
     path('userpost/<uid>/',views.userPost,name='userPost'),
     path('searching',views.searching,name='searching'),
     path('isliked/<id>/',views.isliked,name='isliked'),
+    path('editpost/<id>/',views.editpost,name='editpost'),
+
 
 
     ####################comments#############
@@ -20,8 +22,6 @@ urlpatterns = [
     path('getcomments/<id>/',views.getcomments,name='getcomments'),
     path('editcomment/<id>/',views.editcomment,name='editcomment'),
     path('deletecomment/<id>/',views.deletecomment,name='deletecomment'),
-
-
 
 
     path('suggestion/<pk>/',views.suggestion,name='suggestion'),

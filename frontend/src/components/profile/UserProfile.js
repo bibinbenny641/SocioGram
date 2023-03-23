@@ -54,7 +54,7 @@ import { toast } from "react-toastify";
 function UserProfile() {
 
   let [authTokens, setAuthTokens] = useState(() => localStorage.getItem('authTokens') ? localStorage.getItem('authTokens') : null)
-  let { user, auth_user, currentuser, setCurrentuser } = useContext(AuthContext)
+  let { user, auth_user } = useContext(AuthContext)
   let { logoutUser } = useContext(AuthContext)
   const [userdata, setUserdata] = useState([])
   const [refresh, setRefresh] = useState(false)
@@ -65,10 +65,10 @@ function UserProfile() {
   const [usersfollower, setUsersfollower] = useState(false)
   const [usersfollowing, setUsersfollowing] = useState(false)
   const [isfollowing,setIsfollowing] = useState([])
-  let { viewfollower, viewfollowing, setViewfollower, setViewfollowing } = useContext(AuthContext)
+  const [isedit,setIsedit] = useState(false)
+  let { viewfollower, viewfollowing, setViewfollower, setViewfollowing,caption,setCaption } = useContext(AuthContext)
 
   const { usersid } = useParams();
-  console.log(usersid,user.user_id)
   const [loading, setLoading] = useState(true)
 
   const follvr = function () {
@@ -166,7 +166,6 @@ function UserProfile() {
 
     if (response.status === 200) {
       setIsfollowing(data)
-      console.log(isfollowing,'hh34444444444444444')
 
     } else {
       alert("this is wrong!!")
@@ -196,6 +195,31 @@ function UserProfile() {
     }
   }
 
+  let deletePost = async (id) => {
+    console.log(id,'kk')
+    let response = await fetch(`http://127.0.0.1:8000/follow/deletePostAdmin/${id}/`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer  ${String(JSON.parse(authTokens).access)}`
+      },
+
+    })
+    let data = await response.json()
+
+    if (response.status === 200) {
+      toast.success('deleted')
+    } else {
+      // logoutUser()
+      alert('failed')
+
+    }
+  }
+  let edit = function (){
+    setIsedit(!isedit)
+  }
+  
+
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [size, setSize] = React.useState('md')
   const sizes = ['xs', 'sm', 'md', 'lg', 'xl', 'full']
@@ -223,7 +247,6 @@ function UserProfile() {
     is_follow()
     
   }, [refresh,isfollowing])
-  console.log(post, 'kdkdkdkdk')
 
   return (
 
@@ -342,6 +365,12 @@ function UserProfile() {
                   <EditProfile setRefresh={setRefresh} userdata={userdata} />
                 </Center>
               }
+              {usersid == user.user_id &&
+                <Center>
+
+                  change password
+                </Center>
+              }
               { isfollowing && usersid != user.user_id ?
 
               <center>
@@ -403,7 +432,8 @@ function UserProfile() {
             {
               post.map((foll, i) => (
                 <div key={i}>
-                  <InnerPost foll={foll} Comments={Comments} usersPosts={usersPosts} currentuser={currentuser} />
+                  <InnerPost foll={foll} Comments={Comments} usersPosts={usersPosts} deletePost={deletePost} 
+                   edit={edit}/>
                 </div>
 
               ))

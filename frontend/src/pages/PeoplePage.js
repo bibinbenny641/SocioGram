@@ -14,7 +14,7 @@ function PeoplePage() {
         <>
             <div className="theme-light">
 
-                {/* <Row>
+                <Row>
                     <div style={{ position: 'sticky' }}>
 
                         <Topbar />
@@ -37,8 +37,8 @@ function PeoplePage() {
                         </div>
                     </div>
 
-                </Row> */}
-                <PagenotFound/>
+                </Row>
+                
             </div>
 
 

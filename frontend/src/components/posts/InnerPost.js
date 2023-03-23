@@ -6,16 +6,27 @@ import { Divider } from '@chakra-ui/react'
 import { Card, CardHeader, CardBody, CardFooter, Flex, Avatar, Box, Button, Heading, Text, Image, IconButton } from '@chakra-ui/react'
 import moment from 'moment';
 import EditIcon from '@mui/icons-material/Edit';
+import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
+import { getNativeSelectUtilityClasses } from '@mui/material';
+import EditComment from '../comments/edit/EditComment';
+import { toast } from "react-toastify";
+import MapsUgcRoundedIcon from '@mui/icons-material/MapsUgcRounded';
 
+export default function InnerPost({ foll, Comments, postGet,deletePost,caption,setCaption,edit}) {
 
-export default function InnerPost({ foll, Comments, postGet, viewposts,currentuser}) {
     const [commentOpen, setCommentOpen] = useState(false);
+    const [editpostinput,setEditpostinput] = useState(false)
     const [liked, setLiked] = useState(false)
     const navigate = useNavigate()
-    let { user } = useContext(AuthContext)
+    let { user,authTokens } = useContext(AuthContext)
+    
 
     const openComment = (id) => {
         setCommentOpen(!commentOpen)
+    }
+    const openEdit = (id)=>{
+        console.log(id,'9999999999999999999999999999999999999999999999934234')
+        setEditpostinput(!editpostinput)
     }
     const userProfile = (id) => {
 
@@ -41,12 +52,13 @@ export default function InnerPost({ foll, Comments, postGet, viewposts,currentus
                 setLiked(true)
             }
             postGet()
-            console.log('like cheythuuuuuu..........')
+            
         } else {
             alert("Something went wrong!!")
 
         }
     }
+    
     return (
 
         <>
@@ -79,6 +91,9 @@ export default function InnerPost({ foll, Comments, postGet, viewposts,currentus
                                     {foll.postCaptioin}
                                 </Text>
                             </strong>
+                                <div>
+                                {editpostinput && <EditComment foll={foll} />}
+                                </div>
                         </CardBody>
                         :
 
@@ -91,6 +106,9 @@ export default function InnerPost({ foll, Comments, postGet, viewposts,currentus
                                         {foll.postCaptioin}
                                     </Text>
                                 </strong>
+                                <div>
+                                {editpostinput && <EditComment foll={foll} />}
+                                </div>
                             </CardBody>
                             <Image
                                 objectFit='cover'
@@ -117,28 +135,25 @@ export default function InnerPost({ foll, Comments, postGet, viewposts,currentus
 
                     </Button>
                     <Button onClick={() => openComment(foll.id)} flex='1' variant='ghost' >
-                        Comments
+                    <MapsUgcRoundedIcon/>
                     </Button>
-                    <Button flex='1' variant='ghost'>
-                        {/* {
-                            user.user_id === foll.user ?
+                    {
+                        deletePost  ? user.user_id == foll.user?
+                    <Button onClick={()=>{deletePost(foll.id)}} flex='1' variant='ghost'>
+                        <DeleteRoundedIcon/>
+                    </Button>:
+                    null:
+                    null
+                    }
+                    {
+                        edit ? user.user_id == foll.user ?
 
-                            <EditIcon/>
-                            :
-                            null
-                        } */}
-                        {currentuser}
-                    </Button>
-                    <Button flex='1' variant='ghost'>
-                        {/* {
-                            user.user_id === foll.user ?
-
-                            <EditIcon/>
-                            :
-                            null
-                        } */}
-                        {currentuser}
-                    </Button>
+                    <Button onClick={()=>{openEdit(foll.id)}} flex='1' variant='ghost'>
+                    <EditIcon/>
+                    </Button>:
+                    null
+                    :null
+                    }
                     <div>
                         {commentOpen && <Comments foll={foll} />}
 
